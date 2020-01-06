@@ -12,11 +12,9 @@ import MessageUI
 
 class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableViewDataSource,UITableViewDelegate {
    
-    
+    /// This func gets the items from SQLite db table called itemTable2
     func getRows() -> Array<String> {
-        
         var itemArray = [String]()
-        
         do {
             let records = try self.database.prepare(self.itemTable2.order(id.desc))
             for record in records {
@@ -28,11 +26,11 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
         return (itemArray)
     }
     
+/// Setup table view for thie viewController
     let cellReuseIdentifier = "cell"
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return getRows().count
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,16 +40,12 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
     }
     
   
-    var database:Connection!
+    
+var database:Connection!
 
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-      //  self.popOver.layer.cornerRadius = 10
-        
-        // Setup Database Connection here
         
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
@@ -61,32 +55,6 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
         } catch {
             print(error)
         }
-        
-//
-//        func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//            item.text = item[indexPath.row].item
-//            selectedItem = indexPath.row
-//        }
-//
-//        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//            return item.count
-//        }
-//
-//
-//        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell")!
-//            var label: UILabel
-//            label = cell.viewWithTag(1) as! UILabel // Item label
-//            label.text = contacts[indexPath.row].name
-//
-//            label = cell.viewWithTag(2) as! UILabel // Shop/User label
-//            label.text = contacts[indexPath.row].phone
-//
-//            return cell
-//        }
-
-        
     }
     
     
@@ -99,31 +67,47 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
     let timecheck = Expression<String>("date")
     
 
-    //Create a Table here and then check to make sure it does not already exist
+/// Update the Assigned user of the item.
+    @IBAction func updateItems(_ sender: UIButton) {
+   
+        print("UPDATE TAPPED")
+        let alert = UIAlertController(title: "Update User", message: nil, preferredStyle: .alert)
+        alert.addTextField { (tf) in tf.placeholder = "Item Id"}
+        alert.addTextField { (tf) in tf.placeholder = "AssignedTo"}
+        let action = UIAlertAction (title: "Submit",style: .default) { (_) in
+       
+          guard let itemIdString = alert.textFields?.first?.text,
+                
+            let itemId = Int(itemIdString),
+            let assignedTo = alert.textFields?.last?.text
+            
+            else { return }
+            
+            print(itemIdString)
+           print(assignedTo)
+            
+            let assigneee = self.itemTable2.filter(self.id == itemId)
+            
+            let updateAssignee = assigneee.update(self.assignedTo <- assignedTo)
+            
+            do {
+                try self.database.run(updateAssignee)
+            } catch {
+                print (error)
+            }
+        }
         
-    @IBAction func createTableBtn(_ sender: UIButton) {
-//
-//    I have disabled the createTabe Button here in case someone presses it but we should create a button that deletes the old table and creates a new one to refresh the ID number for the month
-//
-//        let createTable = self.itemTable2.create {(table) in
-//            table.column(self.id, primaryKey: true)
-//            table.column(self.item)
-//            table.column(self.assignedTo)
-//            table.column(self.staff)
-//            table.column(self.serial)
-//            table.column(self.timecheck)
-//        }
-//        do {
-//            try self.database.run(createTable)
-//            print ("Created Table")
-//
-//        }  catch {
-//            print (error)
-//        }
+        ///Create the submit and cancel buttons here
+        let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
+        alert.addAction(action)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
 
+        
     }
     
     
+/// This button deletes the item using the ID code
     @IBAction func deleteItem(_ sender: UIButton) {
     
         print ("DELETE TAPPED")
@@ -143,16 +127,17 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                 print(error)
             }
         }
+        
+        ///Create update and canel button here
         let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
-        
-        
         alert.addAction(action)
         alert.addAction(cancel)
         present(alert,animated: true,completion: nil)
         
     }
-// ---------- Clear All Items in Table ------  //
     
+    
+/// This clears all items in database table
     
     @IBAction func clearAll(_ sender: UIButton) {
         
@@ -178,8 +163,7 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
         present(alert,animated: true,completion: nil)
     }
 
-    //-------------------Export the file here------------//
-    
+/// This exports the items in table into a csv file and attaches to an external application within the iOS device
    @IBAction func exportBtn(_ sender: UIButton) {
    
     do {
@@ -234,21 +218,15 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                       UIActivity.ActivityType.assignToContact,
                    ]
                  present(vc, animated: true, completion: nil)
-    // lines with popOver is needed for iPAD_ remove it if it does not work with iphone
+   
+                /// lines with popOver is needed for iPAD_ remove it if it does not work with iphone
                   if let popOver = vc.popoverPresentationController {
                       popOver.sourceView = self.view
-              
-                  
-                      
                   }
-                  
-                  
-                  
-                  //-----
-                  func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+                func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
                       controller.dismiss(animated: true, completion: nil)
                   }
-              } catch {
+              }  catch {
                   print(error)
                   print ("Error: Failed to create")
               }
@@ -257,63 +235,10 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
           print(error)
       }
       
-// Print out to copy/pasta - work around (below)
-//    do {
-//        let records = try self.database.prepare(self.itemTable2)
-//
-//
-//        for record in records {
-//
-//        let exportString = "\(record[self.id]) , \(record[self.item ]) , \(record[self.assignedTo]) , \(record[self.staff]), \(record[self.serial]), \(record[self.timecheck]) \n"
-//
-//            print(exportString)
-//
-//    }
-//
-//    } catch {
-//        print (error)
-//    }
-
-    // Print out to copy/pasta - work around (above)
-    
-}
+    }
             
-//             let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-//
-//            let exportString = [String] (arrayLiteral:"logID,item,assignedTo,staff,serial,date\r\n","\(record[self.id])" , (record[self.item ]) , (record[self.assignedTo]) , (record[self.staff]), (record[self.serial]) , (record[self.timecheck]) )
-//
-//            let inputString = exportString.joined(separator: ",")
-//
-//            let data = inputString.data (using: String.Encoding.utf8, allowLossyConversion: false )
-//
-
-        
-            // let content = data   {
-            
-            
-            //    print ("NSData: \(content)")
-            //----
-            
-            //---- Added this line
-            //                if MFMailComposeViewController.canSendMail() {
-            //                    let emailController = MFMailComposeViewController()
-            //                    emailController.mailComposeDelegate = self
-            //                    emailController.setToRecipients(["info@canzino.com"])
-            //                    emailController.setSubject("Exported Shit")
-            //                    emailController.setMessageBody("You are an app developer, padwan", isHTML: false)
-            //                    emailController.addAttachmentData(NSData(contentsOf: path!)! as Data, mimeType: "text/csv", fileName: fileName)
-            //
-            //                }
-            //------
-        
-
-//        }
-   
-    
 }
 
-//        let inputString = exportString.joined(separator: ",")
-//     let data = inputString.data (using: String.Encoding.utf8, allowLossyConversion: false )
-    
+
 
 

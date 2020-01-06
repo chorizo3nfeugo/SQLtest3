@@ -13,32 +13,62 @@ import MessageUI
 
 class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate {
     
-    
-    
-    
-   var staffMemebers = ["  ", "Anil","Chris","Colin","Dale","Howard","Jenni","Marteen","Nicholas","Pardave","Ram","Victor","Zeus"]
    
-    // Create exit out of ConfigView when "Done" button is pressed
-    
+/// Create exit out of ConfigView when "Done" button is pressed
     @IBAction func unwindSegue(segue: UIStoryboardSegue)  {
-     
-    }
+     }
 
-    
+   /// Picker variable here
     var thePicker = UIPickerView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        ///Load the picker here
         thePicker.delegate = self
         thePicker.dataSource = self
         checkOutByField.inputView = thePicker
-  
         self.navigationItem.setHidesBackButton(true, animated:true)
-    
-    }
+        
+     ///Setup initlal database connection here
+        do {
+                  let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
+                  let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
+                  let database = try Connection(fileUrl.path)
+                  self.database = database
+              } catch {
+                  print(error)
+              }
 
-               // Do any additional setup after loading the view, typically from a nib.
+///Create table here. Table should just error out and proceed once it sees that table already exists after initial launch.
+        let createTable = self.itemTable2.create {(table) in
+                   table.column(self.id, primaryKey: true)
+                   table.column(self.item)
+                   table.column(self.assignedTo)
+                   table.column(self.staff)
+                   table.column(self.serial)
+                   table.column(self.timecheck)
+               }
+               do {
+                   try self.database.run(createTable)
+                   print ("Created Table")
+
+               }  catch {
+                   print (error)
+               }
+        
+}
+
+/// Varibales for  connection to SQLite Database here
+var database:Connection!
+    
+    let itemTable2  = Table("ItemCheck2")
+               let id = Expression<Int> ("id")
+               let item = Expression<String> ("item")
+               let assignedTo = Expression<String>("assignedTo")
+               let staff = Expression<String>("staff")
+               let serial = Expression<String>("serial")
+               let timecheck = Expression<String>("date")
+    
+              
     
     @IBOutlet weak var itemNameField : UITextField!
     
@@ -49,7 +79,54 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
     @IBOutlet weak var assignedToField : UITextField!
     
 
+    /// Container for stafff memebers here
+    var staffMemebers:Array = [""]
     
+    ///Add a staffname to the staff memeber array
+    @IBAction func addStaffName(_ sender: Any) {
+   let alert = UIAlertController(title: "Add Name", message:nil, preferredStyle: .alert )
+            alert.addTextField {(tf) in tf.placeholder = "Add a Name" }
+           
+       let action = UIAlertAction(title:"Submit",style: .default) { (_) in
+      
+           let newName = alert.textFields?.first?.text
+         
+           return self.staffMemebers.append(newName!)
+        
+           }
+           
+           let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
+           
+           alert.addAction(action)
+           alert.addAction(cancel)
+           present(alert,animated: true,completion: nil)
+    }
+    
+    /// Remove a name from the staff memeber array
+    @IBAction func removeStaffName(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Remove Name", message:nil, preferredStyle: .alert )
+              alert.addTextField {(tf) in tf.placeholder = "Remove a Name" }
+             
+         let action = UIAlertAction(title:"Submit",style: .default) { (_) in
+        
+             let removeName = alert.textFields?.first?.text
+            
+            while self.staffMemebers.contains(removeName!) {
+                if let itemToRemoveIndex = self.staffMemebers.index(of: removeName!) {
+                    self.staffMemebers.remove(at: itemToRemoveIndex)
+                    }
+                }
+            }
+                let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
+                     
+                     alert.addAction(action)
+                     alert.addAction(cancel)
+                     present(alert,animated: true,completion: nil)
+    }
+    
+    
+/// UI Picker View func components
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -70,23 +147,18 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
     
     
     
-//This clicks out of the screen after you input stuff in text fields
-    
+///This clicks out of the screen after you input stuff in text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
-                        // this does not work when user clicks on return key
+/// this does not work when user clicks on return key. Still need to find out why...
     func textFieldShouldReturn(_ itemNameField:UITextField) -> Bool {
         itemNameField.resignFirstResponder()
         return true
     }
     
-// This code prepares everything in 1s view controlller and then passes it over to the confirmation page
-    
- // *** Not declaring the Storyboard ID correctly here... 
-    
-    
+/// This code prepares everything in 1s view controlller and then passes it over to the confirmation view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "gotoConfirm" {
@@ -99,14 +171,7 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
             
         }
         
-        
     }
-    
-    
- 
- 
-    
-    
     
 }
     

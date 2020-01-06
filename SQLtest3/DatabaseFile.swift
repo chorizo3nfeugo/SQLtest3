@@ -8,19 +8,9 @@
 
 import Foundation
 import SQLite
-//
-//let itemTable  = Table("ItemCheck")
-//let id = Expression<Int> ("id")
-//let item = Expression<String> ("item")
-//let assigned = Expression<String>("assigned")
-//let checkedBy = Expression<String>("checkedBy")
-//let serialnum = Expression<String>("serialnum")
 
 
-
-
-//create the table by pressing a button somewhere....
-
+///Thiere is nothing here yet! Coming soon in Version 2.0 ! 
 
 
 
