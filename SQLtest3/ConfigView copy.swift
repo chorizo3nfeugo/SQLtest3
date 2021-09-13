@@ -47,6 +47,11 @@ var database:Connection!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateBtn.layer.cornerRadius = 5
+        exportBtn.layer.cornerRadius = 5
+        deleteItmBtn.layer.cornerRadius = 5
+        clearAllBtn.layer.cornerRadius = 5
+        
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
             let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
@@ -67,7 +72,8 @@ var database:Connection!
     let timecheck = Expression<String>("date")
     
 
-/// Update the Assigned user of the item.
+    @IBOutlet weak var updateBtn: UIButton!
+    /// Update the Assigned user of the item.
     @IBAction func updateItems(_ sender: UIButton) {
    
         print("UPDATE TAPPED")
@@ -106,6 +112,7 @@ var database:Connection!
         
     }
     
+    @IBOutlet weak var deleteItmBtn: UIButton!
     
 /// This button deletes the item using the ID code
     @IBAction func deleteItem(_ sender: UIButton) {
@@ -138,11 +145,12 @@ var database:Connection!
     
     
 /// This clears all items in database table
+    @IBOutlet weak var clearAllBtn: UIButton!
     
     @IBAction func clearAll(_ sender: UIButton) {
         
         print ("ALL USERS CLEARED")
-        let alert = UIAlertController(title: "Delet All Records?", message:nil, preferredStyle: .alert )
+        let alert = UIAlertController(title: "Delete All Records?", message:nil, preferredStyle: .alert )
         
         let submit = UIAlertAction(title:"Yes", style:.default){
             ACTION in clearData().self
@@ -164,6 +172,9 @@ var database:Connection!
     }
 
 /// This exports the items in table into a csv file and attaches to an external application within the iOS device
+    
+    @IBOutlet weak var exportBtn: UIButton!
+    
    @IBAction func exportBtn(_ sender: UIButton) {
    
     do {
@@ -172,30 +183,23 @@ var database:Connection!
           var csvText = "logID,item,assignedTo,staff,serial,date\r\n"
           
           for record in records {
-              
               let fileName = "exportedItems.csv"
               //  let path = P_tmpdir.appending(fileName)
               
               let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-              
-              
+
               let exportString = "\(record[self.id]) , \(record[self.item ]) , \(record[self.assignedTo]) , \(record[self.staff]), \(record[self.serial]), \(record[self.timecheck]) \n"
               
               csvText.append(contentsOf: exportString)
               
               let data = csvText.data (using: String.Encoding.utf8, allowLossyConversion: false )
-              
               do {
                   try data?.write(to:path!)
               } catch {
                   print("Failed to create file")
                   print("\(error)")
               }
-              
               if let content = data {
-                  
-                  
-              
                   print("NSData: \(content)")
                   func configureMailComposeViewController() -> MFMailComposeViewController{
                       let emailController = MFMailComposeViewController()
@@ -207,12 +211,8 @@ var database:Connection!
                       emailController.addAttachmentData(data!, mimeType: "text/csv", fileName: fileName)
                       return emailController
                   }
-                  
-                  
               }
-              
-              do {
-                  
+               do {
                   let vc = UIActivityViewController(activityItems: [path!], applicationActivities: [])
                   vc.excludedActivityTypes = [
                       UIActivity.ActivityType.assignToContact,
@@ -226,12 +226,13 @@ var database:Connection!
                 func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
                       controller.dismiss(animated: true, completion: nil)
                   }
-              }  catch {
+              } catch {
                   print(error)
                   print ("Error: Failed to create")
               }
-          }
-      } catch {
+        }
+      }
+        catch {
           print(error)
       }
       

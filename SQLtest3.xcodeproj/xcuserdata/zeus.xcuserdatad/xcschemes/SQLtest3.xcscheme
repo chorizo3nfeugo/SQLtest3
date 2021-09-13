@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C0EE2B6A21713DB200AEED81"
-               BuildableName = "SQLtest3.app"
+               BuildableName = "Item Check List.app"
                BlueprintName = "SQLtest3"
                ReferencedContainer = "container:SQLtest3.xcodeproj">
             </BuildableReference>
@@ -27,19 +27,17 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C0EE2B6A21713DB200AEED81"
-            BuildableName = "SQLtest3.app"
+            BuildableName = "Item Check List.app"
             BlueprintName = "SQLtest3"
             ReferencedContainer = "container:SQLtest3.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -56,13 +54,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C0EE2B6A21713DB200AEED81"
-            BuildableName = "SQLtest3.app"
+            BuildableName = "Item Check List.app"
             BlueprintName = "SQLtest3"
             ReferencedContainer = "container:SQLtest3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C0EE2B6A21713DB200AEED81"
-            BuildableName = "SQLtest3.app"
+            BuildableName = "Item Check List.app"
             BlueprintName = "SQLtest3"
             ReferencedContainer = "container:SQLtest3.xcodeproj">
          </BuildableReference>

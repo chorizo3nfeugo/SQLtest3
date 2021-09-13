@@ -11,12 +11,18 @@ import UIKit
 
 class Postsubmition: UIViewController {
     
+   
   /// This just hides the back button since we dont want the user to put in multuple instances of the same item very easilly. 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        returnHomeBtn.layer.cornerRadius = 5
+        
         self.navigationItem.setHidesBackButton(true, animated:true)
         
     }
     
+    @IBOutlet weak var returnHomeBtn: UIButton!
     
     
     

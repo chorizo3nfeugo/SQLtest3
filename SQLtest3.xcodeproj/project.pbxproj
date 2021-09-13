@@ -37,7 +37,7 @@
 		C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFile.swift; sourceTree = "<group>"; };
 		C0BCD06C222882E400DBF434 /* PostSubmit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSubmit.swift; sourceTree = "<group>"; };
 		C0C164A921ED096200FD83F7 /* ConfigView copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConfigView copy.swift"; sourceTree = "<group>"; };
-		C0EE2B6B21713DB200AEED81 /* SQLtest3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQLtest3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0EE2B6B21713DB200AEED81 /* Item Check List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Item Check List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EE2B6E21713DB200AEED81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0EE2B7021713DB200AEED81 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C0EE2B7321713DB200AEED81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		C0EE2B6C21713DB200AEED81 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C0EE2B6B21713DB200AEED81 /* SQLtest3.app */,
+				C0EE2B6B21713DB200AEED81 /* Item Check List.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,7 +131,7 @@
 				C01D65B823BE9E62008F2122 /* SQLite */,
 			);
 			productName = SQLtest3;
-			productReference = C0EE2B6B21713DB200AEED81 /* SQLtest3.app */;
+			productReference = C0EE2B6B21713DB200AEED81 /* Item Check List.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -350,7 +350,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -371,7 +371,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

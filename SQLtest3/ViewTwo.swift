@@ -17,6 +17,8 @@ class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
       
+        submitBtn.layer.cornerRadius = 5
+        
     /// Open connection and restate  SQLdb values again here
         do {
             let documentDirectory =  try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -94,6 +96,9 @@ class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
 }
  
+    
+    @IBOutlet weak var submitBtn: UIButton!
+    
     /// These public funcs here sorts out the passed items into the tableView
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

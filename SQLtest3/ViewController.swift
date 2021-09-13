@@ -21,13 +21,27 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
    /// Picker variable here
     var thePicker = UIPickerView()
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        ///Load the picker here
+     
+        configBtn.layer.cornerRadius = 5
+        removeStaffBtn.layer.cornerRadius = 5
+        addStaffBtn.layer.cornerRadius = 5
+        confirmBtn.layer.cornerRadius = 5
+
+    ///Load the picker here
         thePicker.delegate = self
         thePicker.dataSource = self
         checkOutByField.inputView = thePicker
         self.navigationItem.setHidesBackButton(true, animated:true)
         
+    ///Create URL file path
+        let baseURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+               
+               fileURL = baseURL.appendingPathComponent("storedStaffNames.txt")
+        
+    ///load any users in staffmemebers and refresh the Picker scroll thing
+        load()
      ///Setup initlal database connection here
         do {
                   let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
@@ -56,6 +70,12 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
                }
         
 }
+    
+    @IBOutlet weak var configBtn: UIButton!
+    
+    
+///create the Empty File here
+var fileURL: URL!
 
 /// Varibales for  connection to SQLite Database here
 var database:Connection!
@@ -79,9 +99,34 @@ var database:Connection!
     @IBOutlet weak var assignedToField : UITextField!
     
 
-    /// Container for stafff memebers here
-    var staffMemebers:Array = [""]
+/// Container for stafff memebers here
+    var staffMemebers:Array = [" - "]
+
+/// Save func method to save any userinput vules for staffMembers
+    func save(){
+      
+            let a = NSArray(array: staffMemebers)
+        
+            do {
+                try a.write(to: fileURL)
+            } catch  {
+                print("Error Writing file")
+            }
+        thePicker.reloadAllComponents()
     
+    }
+/// Load method here to reload data into UIPicker
+       func load() {
+                   if let loadedData: [String] = NSArray(contentsOf: fileURL) as?  [String] {
+               staffMemebers = loadedData
+            thePicker.reloadAllComponents()
+           }
+           
+       }
+       
+    
+    
+    @IBOutlet weak var addStaffBtn: UIButton!
     ///Add a staffname to the staff memeber array
     @IBAction func addStaffName(_ sender: Any) {
    let alert = UIAlertController(title: "Add Name", message:nil, preferredStyle: .alert )
@@ -100,8 +145,12 @@ var database:Connection!
            alert.addAction(action)
            alert.addAction(cancel)
            present(alert,animated: true,completion: nil)
+    ///Saves and reloads the Picker  any new names to array
+        save()
     }
     
+    
+    @IBOutlet weak var removeStaffBtn: UIButton!
     /// Remove a name from the staff memeber array
     @IBAction func removeStaffName(_ sender: Any) {
         
@@ -123,8 +172,12 @@ var database:Connection!
                      alert.addAction(action)
                      alert.addAction(cancel)
                      present(alert,animated: true,completion: nil)
+        ///Saves any names that have been removed and reloads the picker
+            save()
     }
     
+    
+    @IBOutlet weak var confirmBtn: UIButton!
     
 /// UI Picker View func components
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -138,6 +191,7 @@ var database:Connection!
     
     func pickerView(_ pickerView:UIPickerView,titleForRow row:Int, forComponent component:Int)-> String?{
         return staffMemebers[row]
+        
     }
     
     
@@ -150,6 +204,7 @@ var database:Connection!
 ///This clicks out of the screen after you input stuff in text fields
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        thePicker.reloadAllComponents()
     }
 
 /// this does not work when user clicks on return key. Still need to find out why...
