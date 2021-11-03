@@ -38,6 +38,8 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
         cell.textLabel?.text = getRows()[indexPath.row]
         return cell
     }
+  
+    
     
   
     
