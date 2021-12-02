@@ -16,6 +16,13 @@ class Postsubmition: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) {
+                   view.backgroundColor = .systemBackground
+               } else {
+                   
+               }
+               
+        
         returnHomeBtn.layer.cornerRadius = 5
         
         self.navigationItem.setHidesBackButton(true, animated:true)

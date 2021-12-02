@@ -16,6 +16,14 @@ class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     override func viewDidLoad() {
+        
+        
+        if #available(iOS 13.0, *) {
+                   view.backgroundColor = .systemBackground
+               } else {
+                   
+               }
+               
       
         submitBtn.layer.cornerRadius = 5
         
