@@ -77,6 +77,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C0E43919275E9F7400CFE909 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C0BCD06C222882E400DBF434 /* PostSubmit.swift */,
+				C0EE2B7021713DB200AEED81 /* ViewController.swift */,
+				C0EE2B8021713FF100AEED81 /* ViewTwo.swift */,
+				C0C164A921ED096200FD83F7 /* ConfigView copy.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C0E4391A275E9FD100CFE909 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C0949FCE2742E7C600365474 /* Alerts.swift */,
+				C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C0EE2B6221713DB200AEED81 = {
 			isa = PBXGroup;
 			children = (
@@ -97,14 +117,10 @@
 		C0EE2B6D21713DB200AEED81 /* SQLtest3 */ = {
 			isa = PBXGroup;
 			children = (
-				C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */,
-				C0BCD06C222882E400DBF434 /* PostSubmit.swift */,
+				C0E4391A275E9FD100CFE909 /* Models */,
+				C0E43919275E9F7400CFE909 /* Controllers */,
 				C0EE2B6E21713DB200AEED81 /* AppDelegate.swift */,
-				C0C164A921ED096200FD83F7 /* ConfigView copy.swift */,
-				C0EE2B7021713DB200AEED81 /* ViewController.swift */,
 				C0EE2B7221713DB200AEED81 /* Main.storyboard */,
-				C0EE2B8021713FF100AEED81 /* ViewTwo.swift */,
-				C0949FCE2742E7C600365474 /* Alerts.swift */,
 				C0EE2B7521713DB400AEED81 /* Assets.xcassets */,
 				C0EE2B7721713DB400AEED81 /* LaunchScreen.storyboard */,
 				C0EE2B7A21713DB400AEED81 /* Info.plist */,

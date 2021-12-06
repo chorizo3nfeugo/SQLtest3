@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Postsubmition: UIViewController {
+final class Postsubmition: UIViewController {
     
    
   /// This just hides the back button since we dont want the user to put in multuple instances of the same item very easilly. 
@@ -22,8 +22,9 @@ class Postsubmition: UIViewController {
                    
                }
                
-        
-        returnHomeBtn.layer.cornerRadius = 5
+        returnHomeBtn.layer.cornerRadius = 6
+        itemCheckLabel.clipsToBounds = true
+        itemCheckLabel.layer.cornerRadius = 6
         
         self.navigationItem.setHidesBackButton(true, animated:true)
         
@@ -32,5 +33,6 @@ class Postsubmition: UIViewController {
     @IBOutlet weak var returnHomeBtn: UIButton!
     
     
+    @IBOutlet weak var itemCheckLabel: UILabel!
     
 }

@@ -10,7 +10,7 @@ import Foundation
 
 import UIKit
 
-class Alert {
+final class Alert {
  
     class func showBasic(title: String, message:String, vc: UIViewController){
         

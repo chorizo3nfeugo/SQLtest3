@@ -10,43 +10,67 @@ import UIKit
 import SQLite
 import MessageUI
 
-class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableViewDataSource,UITableViewDelegate {
+final class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableViewDataSource,UITableViewDelegate {
    
-    /// This func gets the items from SQLite db table called itemTable2
     
+    var database:Connection!
+
+override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            if #available(iOS 13.0, *) {
+                view.backgroundColor = .systemBackground
+            } else {
+                
+            }
+            exportBtn.layer.cornerRadius = 6
+            clearAllBtn.layer.cornerRadius = 6
+            
+            do {
+                let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
+                let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
+                let database = try Connection(fileUrl.path)
+                self.database = database
+            } catch {
+                print(error)
+            }
+            
+            func getRows() -> Array<ItemContainter> {
+                do {
+                    let records = try self.database.prepare(self.itemTable2.order(id.desc))
+                    for record in records {
+                        
+                        checkOutItemsArray.append(ItemContainter(idNum: record[self.id], itemName: "\(record[self.item])", assigned: "\(record[self.assignedTo])", staff: "\(record[self.staff])", timeCheck: "\(record[self.timecheck])",serialNum: "\(record[self.serial])"))
+                    }
+                    print(checkOutItemsArray.count)
+                } catch {
+                    print(error)
+                }
+                return checkOutItemsArray
+            }
+            print(getRows())
+        
+        }
     
+//Database properties
+    let itemTable2  = Table("ItemCheck2")
+    let id = Expression<Int> ("id")
+    let item = Expression<String> ("item")
+    let assignedTo = Expression<String>("assignedTo")
+    let staff = Expression<String>("staff")
+    let serial = Expression<String>("serial")
+    let timecheck = Expression<String>("date")
+    
+   
+    
+ /// Once database has been loaded this array will hold all data temporarly for the tableview
     
     var checkOutItemsArray:[ItemContainter] = []
     
-//This function grabs SQLite records and assigns to checkOutItemsArray
-    
-    func getRows() -> Array<ItemContainter> {
-    //    var  itemArray = [ItemContainter]()
-        do {
-            let records = try self.database.prepare(self.itemTable2.order(id.desc))
-            for record in records {
-                
-                checkOutItemsArray.append(ItemContainter(idNum: record[self.id], itemName: "\(record[self.item])", assigned: "\(record[self.assignedTo])", staff: "\(record[self.staff])", timeCheck: "\(record[self.timecheck])",serialNum: "\(record[self.serial])"))
-            }
-          
-    print(checkOutItemsArray)
-            
-         //   checkOutItemsArray = itemArray
-            
-        } catch {
-            print(error)
-        }
-        return checkOutItemsArray
-    }
-    
- 
     
     
 /// Setup table view for thie viewController
-    
     @IBOutlet weak var itemListTableView: UITableView!
-    
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return checkOutItemsArray.count
@@ -54,23 +78,23 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       //  let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.text = checkOutItemsArray[indexPath.row].itemName
         cell.detailTextLabel?.text = checkOutItemsArray[indexPath.row].assigned
-        
+
         return cell
     }
 
+    
+///Delete single item in array and db.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
-// Need to add confirmation pop up?
-
-        
                 let itemIDString = checkOutItemsArray[indexPath.row].idNum
                 let itemID = Int(itemIDString)
 
                let item = self.itemTable2.filter(self.id == itemID)
                let deleteItem = item.delete()
+        
                do {
                    try self.database.run(deleteItem)
                 print("All items at \(itemID) has been deleted ")
@@ -90,12 +114,11 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
   
   
     
-    
-    
-    
+
+    /// Following right swipe here update assignee and / or serial num
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-                print("UPDATE TAPPED")
+                print("Update Swiped")
              
                         let selectedItem = self.checkOutItemsArray[indexPath.row].itemName
                         
@@ -114,14 +137,15 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                             let assignedTo = alert.textFields?.first?.text
                             let updateAssignee = selectedItem.update(self.assignedTo <- assignedTo!)
   
-                //   Need to call this in another do catch block? or
                             let serialNum = alert.textFields?.last?.text
                             let updateSerial = selectedItem.update(self.serial <- serialNum!)
-                //
-                              
-                            if assignedTo!.isEmpty && serialNum!.isEmpty {
-                                Alert.showBasic(title: "No data to update!", message: "Please fill out Assigned To or Serial Num!", vc: self)
-                            }
+                
+                                
+                                if assignedTo == nil && serialNum == nil {
+                                        Alert.showBasic(title: "No data to update!", message: "Please fill out Assigned To or Serial Num!", vc: self)
+                                                                      
+                                                                  }
+ 
 
                                 if assignedTo!.isEmpty {
                                     do {
@@ -135,7 +159,7 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                                 if serialNum!.isEmpty {
                                     do {
                                         try self.database.run(updateAssignee)
-                                        Alert.showBasic(title: "Item Updated!", message: "Updated Assigned To!", vc: self)
+                                        Alert.showBasic(title: "Item Updated!", message: "Updated Assignee!", vc: self)
                                     } catch {
                                         print(error)
                                     }
@@ -145,18 +169,25 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                                     do {
                                             try self.database.run(updateAssignee)
                                             try self.database.run(updateSerial)
-
-                                        Alert.showBasic(title: "Item Updated!", message: "Assigned To and Serial Num Updated!", vc: self)
+                                        print("Updating Assignee and Serial num!")
+                                        
+                                        Alert.showBasic(title: "Item Updated!", message: "Assignee and Serial Num Updated!", vc: self)
 
                                             } catch  {
 
                                                 print (error)
                                                 }
+                                    
+                                  
                                 }
-     
-                      // Closign bracket for actions
+    /// The next 2 lines of code removes all objects in  checkOutItemsArray and then calls the viewDidLoad function again  to reload the updated DB info into the checkOutItemsArray
+                self.checkOutItemsArray.removeAll()
+                self.viewDidLoad()
+
+        DispatchQueue.main.async { self.itemListTableView.reloadData() }
+                     // Closing bracket for Edit Actions
                           }
-    ///Create the submit and cancel buttons here
+
                           let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
                           alert.addAction(action)
                           alert.addAction(cancel)
@@ -164,15 +195,16 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
                  
             print("Done Editing Items")
         }
-/// This should udpdate the row here... not sure where to slap it in?
-
+        
         editItem.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         return UISwipeActionsConfiguration(actions: [editItem])
+        
+   ///Closing bracked for update swiped!
     }
         
     
     
-//Date Converter
+///Date Converter function
     func convertDateFormater(_ date: String) -> String
     {
         let dateFormatter = DateFormatter()
@@ -187,103 +219,65 @@ class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
   
         let selectedDate = (self.checkOutItemsArray[indexPath.row].timeCheck)
-//Convert Date here to better format
+///Convert Date here to better format for display
        let convertedDate  =  convertDateFormater(selectedDate)
         
-// Setting constant to display details of selected Item
-        let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: "with Serial Number \(checkOutItemsArray[indexPath.row].serialNum) has been assigned to \(checkOutItemsArray[indexPath.row].assigned) & signed out by \(checkOutItemsArray[indexPath.row].staff) on \(convertedDate)" , preferredStyle: .alert )
-        
-       
+/// Setting constant to display details of selected Item
+        let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate)" , preferredStyle: .alert )
         
         let action = UIAlertAction(title:"Done",style: .default) { (_) in
-         
-            
             
         }
-        
         
         alert.addAction(action)
         present(alert,animated: true,completion: nil)
-        
     }
 
-
     
-var database:Connection!
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            
-        }
-        
-        
-     //   updateBtn.layer.cornerRadius = 5
-        exportBtn.layer.cornerRadius = 5
-    //    deleteItmBtn.layer.cornerRadius = 5
-        clearAllBtn.layer.cornerRadius = 5
-        
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
-            let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database = database
-        } catch {
-            print(error)
-        }
-        
-        print(getRows())
-    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        self.itemListTableView.reloadData()
-//    }
-    
-    
-    let itemTable2  = Table("ItemCheck2")
-    let id = Expression<Int> ("id")
-    let item = Expression<String> ("item")
-    let assignedTo = Expression<String>("assignedTo")
-    let staff = Expression<String>("staff")
-    let serial = Expression<String>("serial")
-    let timecheck = Expression<String>("date")
-    
-/// This clears all items in database table
+/// This clears all items in database
     @IBOutlet weak var clearAllBtn: UIButton!
-    
     @IBAction func clearAll(_ sender: UIButton) {
         
-        print ("ALL USERS CLEARED")
-        let alert = UIAlertController(title: "Delete All Records?", message:nil, preferredStyle: .alert )
+    let alert = UIAlertController(title: "Delete All Records?", message:nil, preferredStyle: .alert )
         
-        let submit = UIAlertAction(title:"Yes", style:.default){
+    let submit = UIAlertAction(title:"Yes", style:.default){
             ACTION in clearData().self
         }
         
         let cancel = UIAlertAction(title:"No",style: .destructive,handler:{(action) -> Void in })
         
+        
+  /// The following function deletes all items in database and clears out temporary array of checkOutItems
         func clearData(){
             let deleteAll = self.itemTable2.delete()
+       
             do {
                 try self.database.run(deleteAll)
+                print("All items have been deleted!")
+                performSegue(withIdentifier: "backToMainVC", sender: self)
             } catch {
                 print (error)
             }
+       
         }
         alert.addAction(submit)
         alert.addAction(cancel)
         present(alert,animated: true,completion: nil)
+       
+    }
+    
+/// This changes dataBaseDeleted  variable on main viewController to true. This is triggered after user confirms to delete all items in clearAllBtn button function.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "backToMainVC"{
+            if let destVC = segue.destination as? ViewController  {
+                destVC.dataBaseDeleted = true
+            }
+        }
     }
 
+    
 /// This exports the items in table into a csv file and attaches to an external application within the iOS device
-    
     @IBOutlet weak var exportBtn: UIButton!
-    
    @IBAction func exportBtn(_ sender: UIButton) {
     do {
           let records = try self.database.prepare(self.itemTable2)
@@ -345,4 +339,6 @@ var database:Connection!
 
 //Closing Config ViewController
 }
+
+
 
