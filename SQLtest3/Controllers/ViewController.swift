@@ -57,8 +57,8 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         loadStaffMembers()
 
 /// Database check here to make sure items  are there or not
-        print("Database deleted is equal to \(dataBaseDeleted)")
-        dataBaseDeleted == true ? Alert.showBasic(title: "All items Deleted", message: "Have a great day!", vc: self) : print("Database is saved and all good!")
+        print("Database deleted?  \(dataBaseDeleted)")
+        dataBaseDeleted == true ? Alert.showBasic(title: "All Items Deleted!", message: "Have a great day!", vc: self) : print("Database is saved and all good!")
         
     }
         
@@ -97,7 +97,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         print("Saved! Here's the new list of staff members  \(staffMembers)")
     }
     
-/// Load method here to  reload data into UIPicker via staffMembers
+/// Load method here to reload data into UIPicker via staffMembers
     func loadStaffMembers() {
         
         let defaults = UserDefaults.standard
@@ -148,7 +148,6 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
                     }
                 }
             print("Staff Member Removed! There are now \(self.staffMembers.count) staff! ")
-    
             return self.saveStaffMembers()
             }
                 let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
@@ -194,13 +193,12 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
       
-/// Alert inserted here to let user know to put in at least one staff memeber if staffMembers have nothing inside 
+/// Alert inserted here to let user know to put in at least one staff memeber if staffMembers is empty
         if staffMembers.isEmpty {
-            return Alert.showBasic(title: "Please Add Staff Member!", message: "Click that plus button!", vc: self)
+            return Alert.showBasic(title: "Please Add A Staff Member!", message: "Click that plus button!", vc: self)
+        } else {
+            checkOutByField.text = staffMembers[row]
         }
-
-        checkOutByField.text = staffMembers[row]
-        
     }
     
 ///This clicks out of the screen after you input stuff in text fields
@@ -209,13 +207,13 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         self.view.endEditing(true)
     }
 
-/// this does not work when user clicks on return key. Still need to find out why...
+/// Uuser clicks on return key and keyboard pops off..
     func textFieldShouldReturn(_ itemNameField:UITextField) -> Bool {
         itemNameField.resignFirstResponder()
         return true
     }
     
-/// This UIStoryboardSegue prepares  everything in 1s view controlller and then passes it over to the  viewTwo controller
+/// This UIStoryboardSegue prepares  everything in this  view controlller and then passes it over to the  viewTwo controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "gotoConfirm" {
             

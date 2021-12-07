@@ -63,7 +63,7 @@ override func viewDidLoad() {
     
    
     
- /// Once database has been loaded this array will hold all data temporarly for the tableview
+ /// Once database has been loaded this array will hold all db data temporarly to display for tableview
     
     var checkOutItemsArray:[ItemContainter] = []
     
@@ -86,7 +86,7 @@ override func viewDidLoad() {
     }
 
     
-///Delete single item in array and db.
+///Delete single item & it's properties  in array and db.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
                 let itemIDString = checkOutItemsArray[indexPath.row].idNum
@@ -118,20 +118,20 @@ override func viewDidLoad() {
     /// Following right swipe here update assignee and / or serial num
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-                print("Update Swiped")
-             
+        
                         let selectedItem = self.checkOutItemsArray[indexPath.row].itemName
                         
                         let editItem =  UIContextualAction(style: .normal, title: "Edit") {(action,view, nil) in
                             
                         let alert = UIAlertController(title: "Update \(selectedItem)", message: nil, preferredStyle: .alert)
                          
-                          alert.addTextField { (tf) in tf.placeholder = "Assigned To"}
+                          alert.addTextField { (tf) in tf.placeholder = "Assignee"}
                           alert.addTextField { (tf) in tf.placeholder = "Serial"}
                          
                             let action = UIAlertAction (title: "Submit",style: .default) { (_) in
-            
+                            
                             let itemIdString = self.checkOutItemsArray[indexPath.row].idNum
+                            let itemName = self.checkOutItemsArray[indexPath.row].itemName
                             let selectedItem = self.itemTable2.filter(self.id == itemIdString)
                             
                             let assignedTo = alert.textFields?.first?.text
@@ -139,56 +139,49 @@ override func viewDidLoad() {
   
                             let serialNum = alert.textFields?.last?.text
                             let updateSerial = selectedItem.update(self.serial <- serialNum!)
-                
+    
                                 
-                                if assignedTo == nil && serialNum == nil {
-                                        Alert.showBasic(title: "No data to update!", message: "Please fill out Assigned To or Serial Num!", vc: self)
-                                                                      
-                                                                  }
- 
-
-                                if assignedTo!.isEmpty {
+                                if assignedTo!.isEmpty && serialNum!.isEmpty {
+                                    Alert.showBasic(title: "Whoops!", message: "Please Input New Assignee Or Serial Number To Update!", vc: self)
+                                }
+                                
+                                if assignedTo!.isEmpty && !serialNum!.isEmpty {
                                     do {
-                                        try self.database.run(updateSerial)
-                                        Alert.showBasic(title: "Item Updated", message: "Serial Num Updated!", vc: self)
+                                       try self.database.run(updateSerial)
+                                        Alert.showBasic(title: "\(itemName) Updated!", message: "Serial Num Updated!", vc: self)
                                     } catch {
                                         print(error)
                                     }
                                 }
-
-                                if serialNum!.isEmpty {
+                                if serialNum!.isEmpty && !assignedTo!.isEmpty {
                                     do {
                                         try self.database.run(updateAssignee)
-                                        Alert.showBasic(title: "Item Updated!", message: "Updated Assignee!", vc: self)
+                                        Alert.showBasic(title: "\(itemName) Updated!", message: "Updated Assignee!", vc: self)
                                     } catch {
                                         print(error)
                                     }
                                 }
-
+                                
                                 if !serialNum!.isEmpty && !assignedTo!.isEmpty {
                                     do {
                                             try self.database.run(updateAssignee)
                                             try self.database.run(updateSerial)
                                         print("Updating Assignee and Serial num!")
-                                        
                                         Alert.showBasic(title: "Item Updated!", message: "Assignee and Serial Num Updated!", vc: self)
-
                                             } catch  {
-
                                                 print (error)
-                                                }
-                                    
-                                  
+                                    }
                                 }
-    /// The next 2 lines of code removes all objects in  checkOutItemsArray and then calls the viewDidLoad function again  to reload the updated DB info into the checkOutItemsArray
                 self.checkOutItemsArray.removeAll()
                 self.viewDidLoad()
 
         DispatchQueue.main.async { self.itemListTableView.reloadData() }
+                                
                      // Closing bracket for Edit Actions
                           }
+                            
 
-                          let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
+                let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
                           alert.addAction(action)
                           alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
@@ -215,14 +208,13 @@ override func viewDidLoad() {
 
     }
 
-    
+///Shows details of item when selected.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
   
         let selectedDate = (self.checkOutItemsArray[indexPath.row].timeCheck)
 ///Convert Date here to better format for display
        let convertedDate  =  convertDateFormater(selectedDate)
         
-/// Setting constant to display details of selected Item
         let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate)" , preferredStyle: .alert )
         
         let action = UIAlertAction(title:"Done",style: .default) { (_) in
@@ -250,7 +242,6 @@ override func viewDidLoad() {
   /// The following function deletes all items in database and clears out temporary array of checkOutItems
         func clearData(){
             let deleteAll = self.itemTable2.delete()
-       
             do {
                 try self.database.run(deleteAll)
                 print("All items have been deleted!")
@@ -286,7 +277,7 @@ override func viewDidLoad() {
           
           for record in records {
               let fileName = "exportedItems.csv"
-              //  let path = P_tmpdir.appending(fileName)
+                //  let path = P_tmpdir.appending(fileName)
               
               let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
