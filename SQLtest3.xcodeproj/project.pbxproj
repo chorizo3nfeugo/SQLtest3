@@ -121,8 +121,8 @@
 				C0E43919275E9F7400CFE909 /* Controllers */,
 				C0EE2B6E21713DB200AEED81 /* AppDelegate.swift */,
 				C0EE2B7221713DB200AEED81 /* Main.storyboard */,
-				C0EE2B7521713DB400AEED81 /* Assets.xcassets */,
 				C0EE2B7721713DB400AEED81 /* LaunchScreen.storyboard */,
+				C0EE2B7521713DB400AEED81 /* Assets.xcassets */,
 				C0EE2B7A21713DB400AEED81 /* Info.plist */,
 				C0511AB4217FC0F500C27E4B /* Frameworks */,
 			);
@@ -369,6 +369,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
 				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;
@@ -390,6 +391,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
 				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;

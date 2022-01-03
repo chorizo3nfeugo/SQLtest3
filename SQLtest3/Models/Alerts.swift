@@ -10,13 +10,13 @@ import Foundation
 
 import UIKit
 
-final class Alert {
- 
-    class func showBasic(title: String, message:String, vc: UIViewController){
+    final class Alert {
+     
+        class func showBasic(title: String, message:String, vc: UIViewController){
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            vc.present(alert, animated: true)
+        }
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        vc.present(alert, animated: true)
     }
-    
-}

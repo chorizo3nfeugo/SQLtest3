@@ -16,18 +16,59 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
 /// Creating button and textfield arrays for later manipulation
     @IBOutlet var buttonsArray: [UIButton]!
     @IBOutlet var textFieldArray: [UITextField]!
-    
-    
-    var dataBaseDeleted:Bool = false
-    
+    @IBOutlet var itemPropertiesLbls: [UILabel]!
 ///    Create exit out of ConfigView when "Done" button is pressed
     @IBAction func unwindSegue(segue: UIStoryboardSegue)  {
      }
+    @IBOutlet weak var configBtn: UIButton!
+    @IBAction func configBtnAction(_ sender: Any) {
+        performSegue(withIdentifier: "gotoConfig", sender: self)
+    }
     
-    override func viewDidLoad() {
-  // MARK: - viewDidLoad
+    @IBOutlet weak var itemNameField : UITextField!
+    
+    @IBOutlet weak var serialNumField : UITextField!
+    
+    @IBOutlet weak var checkOutByField : UITextField!
+    
+    @IBOutlet weak var assignedToField : UITextField!
+  
+    var dataBaseDeleted:Bool = false
+
+    var theStaffPicker = UIPickerView()
+    
+    
+    func configPicker(){
+             let toolbar = UIToolbar()
+             
+             toolbar.sizeToFit()
+             
+    ///create done button
+             let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
+             toolbar.setItems([doneBtn], animated: true)
+             
+        checkOutByField.inputAccessoryView = toolbar
         
-       super.viewDidLoad()
+         }
+
+
+    // Objc C func for donebutton inside the createDatePickers func
+    @objc func donePressed(){
+        print("DONE BUTTON CREATED")
+        self.view.endEditing(true)
+        }
+    
+    
+    
+    
+    
+    
+// MARK: -                                                              viewDidLoad
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        self.title = "Item Check"
         
 ///    Darkmode check
         if #available(iOS 13.0, *) {
@@ -35,51 +76,36 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         } else {
             // Fallback on earlier versions
         }
-        
         if traitCollection.userInterfaceStyle == .dark {
             for text in textFieldArray {
                 text.backgroundColor = .darkGray
             }
+            
+            for text in itemPropertiesLbls{
+                text.textColor = .systemTeal
+            }
         }
-        
-///     Button rounding
+        ///     Button rounding
         for button in buttonsArray {
             button.layer.cornerRadius = 6
         }
         
-///    Load the picker here
+        ///    Load the picker here
         theStaffPicker.delegate = self
         theStaffPicker.dataSource = self
         checkOutByField.inputView = theStaffPicker
         self.navigationItem.setHidesBackButton(true, animated:true)
+        configPicker()
         
-///    Call load function to load in staff memebers to picker
+        ///    Call load function to load in staff memebers to picker
         loadStaffMembers()
-
-/// Database check here to make sure items  are there or not
+        
+        /// Database check here to make sure items  are there or not
         print("Database deleted?  \(dataBaseDeleted)")
         dataBaseDeleted == true ? Alert.showBasic(title: "All Items Deleted!", message: "Have a great day!", vc: self) : print("Database is saved and all good!")
         
     }
-        
 
-    @IBOutlet weak var configBtn: UIButton!
-    @IBAction func configBtnAction(_ sender: Any) {
-        performSegue(withIdentifier: "gotoConfig", sender: self)
-    }
-    
-    
-    @IBOutlet weak var itemNameField : UITextField!
-    
-    @IBOutlet weak var serialNumField : UITextField!
-   
-    @IBOutlet weak var checkOutByField : UITextField!
-    
-    @IBOutlet weak var assignedToField : UITextField!
-  
-    
-/// Picker variable assigned to UIPicker
-    var theStaffPicker = UIPickerView()
     
 /// Array of staff members here which then reloads picker once it's been changed.
     var staffMembers = [String](){
@@ -158,7 +184,6 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         
     }
     
-    
     @IBOutlet weak var confirmBtn: UIButton!
     @IBAction func confirmBtnCheck(_ sender: Any) {
         
@@ -166,7 +191,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         
         if itemNameField.text!.isEmpty || assignedToField.text!.isEmpty {
             
-            Alert.showBasic(title: "Missing data!", message: "Please put in an item and assign to someone!", vc: self)
+            Alert.showBasic(title: "Missing Data!", message: "Please put in an item and assign to someone!", vc: self)
         }
         
         if assignedToField.text!.isEmpty || checkOutByField.text!.isEmpty {

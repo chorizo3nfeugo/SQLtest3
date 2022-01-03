@@ -12,8 +12,12 @@ import UIKit
 final class Postsubmition: UIViewController {
     
    
-  /// This just hides the back button since we dont want the user to put in multuple instances of the same item very easilly. 
+// MARK: - ViewDidLoad
+    
     override func viewDidLoad() {
+        
+        self.title = "Item Saved!"
+        
         super.viewDidLoad()
         
         if #available(iOS 13.0, *) {

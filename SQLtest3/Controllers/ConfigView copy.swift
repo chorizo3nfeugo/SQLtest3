@@ -125,8 +125,8 @@ override func viewDidLoad() {
                             
                         let alert = UIAlertController(title: "Update \(selectedItem)", message: nil, preferredStyle: .alert)
                          
-                          alert.addTextField { (tf) in tf.placeholder = "Assignee"}
-                          alert.addTextField { (tf) in tf.placeholder = "Serial"}
+                          alert.addTextField { (tf) in tf.placeholder = "Assigned To"}
+                          alert.addTextField { (tf) in tf.placeholder = "Serial Num"}
                          
                             let action = UIAlertAction (title: "Submit",style: .default) { (_) in
                             
@@ -167,11 +167,42 @@ override func viewDidLoad() {
                                             try self.database.run(updateAssignee)
                                             try self.database.run(updateSerial)
                                         print("Updating Assignee and Serial num!")
-                                        Alert.showBasic(title: "Item Updated!", message: "Assignee and Serial Num Updated!", vc: self)
+                                        Alert.showBasic(title: "\(itemName) Updated!", message: "Assignee and Serial Num Updated!", vc: self)
                                             } catch  {
                                                 print (error)
                                     }
                                 }
+                                
+
+                                //                            func editingChecks(textFieldCheck: (String, String)) {
+                                //
+                                //    switch textFieldCheck {
+                                //     //   Alert.showBasic(title: "Whoops!", message: "Please Input New Assignee Or Serial Number To Update!", vc: self)
+                                //    case (assignedTo!.isEmpty, !serialNum!.isEmpty):
+                                //                                        do {
+                                //                                          try self.database.run(updateSerial)
+                                //                                           Alert.showBasic(title: "\(itemName) Updated!", message: "Serial Num Updated!", vc: self)
+                                //                                            } catch {
+                                //                                           print(error)
+                                //                                            }
+                                //    case (serialNum!.isEmpty, !assignedTo!.isEmpty):
+                                //                                        do {
+                                //                                            try self.database.run(updateAssignee)
+                                //                                            Alert.showBasic(title: "\(itemName) Updated!", message: "Updated Assignee!", vc: self)
+                                //                                                } catch {
+                                //                                                        print(error)
+                                //                                            }
+                                //
+                                //        default: Alert.showBasic(title: "Whoops!", message: "Please Input New Assignee Or Serial Number To Update!", vc: self)
+                                //
+                                //                                   }
+                                //
+                                //                    print("Default")
+                                //                                }
+                                //
+                                //                                editingChecks(textEmpty: (serialNum))
+                                
+                                
                 self.checkOutItemsArray.removeAll()
                 self.viewDidLoad()
 

@@ -14,25 +14,23 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
     
     override func viewDidLoad() {
         
+        self.title = "Confirm Item Details!"
         
-       
-
+//        let attributes = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light", size: 17)!]
+//        UINavigationBar.appearance().titleTextAttributes = attributes
+        
 /// Setting darkmode via assigning background to systemBackground
         if #available(iOS 13.0, *) {
                    view.backgroundColor = .systemBackground
+                    
                } else {
                    
                }
-        
+    
 /// Cornering buttons!
         submitBtn.layer.cornerRadius = 6
-        confirmLabel.clipsToBounds = true
-        confirmLabel.layer.cornerRadius = 6
-        
+ 
 
-        
-
-        
 /// Create database file and connect to it
         do {
             let documentDirectory =  try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -42,7 +40,6 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         } catch {
             print (error)
         }
-        
         
 /// Create table
          let createTable = self.itemTable2.create {(table) in
@@ -112,15 +109,13 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
                 } catch {
                     print (error)
                 }
-        
 }
  
+    @IBOutlet weak var submitBtn: UIButton!
+   // @IBOutlet weak var confirmLabel: UILabel!
     
     let cellDetails = ["Item: ","Assigned To: ","Signed Out By: ","Serial Num: "]
     
-    
-    @IBOutlet weak var submitBtn: UIButton!
-    @IBOutlet weak var confirmLabel: UILabel!
     
     /// These public funcs here sorts out the passed items into the tableView
     
@@ -132,11 +127,22 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .value2 , reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: .value2, reuseIdentifier: "cell")
       
        
         cell.detailTextLabel?.text = confirmItems[indexPath.row]
+        
         cell.textLabel?.text = cellDetails[indexPath.row]
+//
+//        cell.textLabel?.textAlignment = NSTextAlignment.center
+//
+        
+        cell.textLabel?.textAlignment = .center
+        
+        cell.detailTextLabel?.textAlignment = .left
+
+        
+       //  cell.textLabel?.textColor = .systemTeal
         
         return (cell)
     
