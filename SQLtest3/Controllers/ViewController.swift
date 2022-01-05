@@ -58,10 +58,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         self.view.endEditing(true)
         }
     
-    
-    
-    
-    
+
     
 // MARK: -                                                              viewDidLoad
     override func viewDidLoad() {
