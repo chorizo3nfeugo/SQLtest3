@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-import SQLite
+//import SQLite
 import MessageUI
 
 final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate {
@@ -21,9 +21,16 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     @IBAction func unwindSegue(segue: UIStoryboardSegue)  {
      }
     @IBOutlet weak var configBtn: UIButton!
+    
     @IBAction func configBtnAction(_ sender: Any) {
         performSegue(withIdentifier: "gotoConfig", sender: self)
     }
+    
+    
+  
+    
+    
+ 
     
     @IBOutlet weak var itemNameField : UITextField!
     
@@ -33,11 +40,28 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     
     @IBOutlet weak var assignedToField : UITextField!
   
+    @IBOutlet weak var returnDateField: UITextField!
+    
+    
+    
+    @IBOutlet weak var returnDateLabel: UILabel!
+    @IBOutlet weak var returnSwitchState: UISwitch!
+    @IBAction func returnDateSwitch(_ state: UISwitch) {
+        
+        if state.isOn {
+            returnDateLabel.text = "Return Date"
+            returnDateField.isHidden = false
+           // createReturnDatePicker()
+           
+        } else{
+            returnDateLabel.text = "Return Date?"
+            returnDateField.isHidden = true
+        }
+    }
+    
     var dataBaseDeleted:Bool = false
 
     var theStaffPicker = UIPickerView()
-    
-    
     func configPicker(){
              let toolbar = UIToolbar()
              
@@ -59,13 +83,55 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         }
     
 
+   // MARK:-                    ReturnDate initializers
+    var returnDatePicker = UIDatePicker()
+    
+    func createReturnDatePicker(){
+                 let toolbar = UIToolbar()
+                 
+                 toolbar.sizeToFit()
+                 
+        ///create done button
+                 let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneDateBtn))
+        
+                 toolbar.setItems([doneBtn], animated: true)
+                 
+        /// Assign toolbar
+                 returnDateField.inputAccessoryView = toolbar
+               
+        ///Assign date picker to the text field
+            returnDateField.inputView = returnDatePicker
+                 
+        /// Assign date picker to end date text field
+           
+                
+             }
+
+
+        // Objc C func for donebutton inside the createDatePickers func
+        @objc func doneDateBtn(){
+            //Format Date here
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+
+            // Then assign new date formats to labels here
+            
+            returnDateField.text = formatter.string(from:returnDatePicker.date)
+            
+          //  returnDateField.text = formatter.string()
+        
+                    self.view.endEditing(true)
+            }
+    
     
 // MARK: -                                                              viewDidLoad
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         self.title = "Item Check"
+        
+        self.returnSwitchState.isOn = false
+        self.returnDateField.isHidden = true
         
 ///    Darkmode check
         if #available(iOS 13.0, *) {
@@ -85,20 +151,31 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         ///     Button rounding
         for button in buttonsArray {
             button.layer.cornerRadius = 6
+            ///Need this to have background image lock into cornerRadius for buttons
+            
+            button.clipsToBounds = true
         }
+        
         
         ///    Load the picker here
         theStaffPicker.delegate = self
         theStaffPicker.dataSource = self
         checkOutByField.inputView = theStaffPicker
+        
+        
+     //   returnDateField.inputView = returnDatePicker
+        
+        
         self.navigationItem.setHidesBackButton(true, animated:true)
         configPicker()
+        createReturnDatePicker()
         
         ///    Call load function to load in staff memebers to picker
         loadStaffMembers()
         
         /// Database check here to make sure items  are there or not
         print("Database deleted?  \(dataBaseDeleted)")
+        
         dataBaseDeleted == true ? Alert.showBasic(title: "All Items Deleted!", message: "Have a great day!", vc: self) : print("Database is saved and all good!")
         
     }

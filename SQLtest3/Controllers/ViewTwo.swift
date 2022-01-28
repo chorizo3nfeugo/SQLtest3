@@ -13,11 +13,8 @@ import SQLite
 final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
-        
+
         self.title = "Confirm Item Details!"
-        
-//        let attributes = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Light", size: 17)!]
-//        UINavigationBar.appearance().titleTextAttributes = attributes
         
 /// Setting darkmode via assigning background to systemBackground
         if #available(iOS 13.0, *) {
@@ -26,96 +23,59 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
                } else {
                    
                }
-    
-/// Cornering buttons!
         submitBtn.layer.cornerRadius = 6
- 
 
-/// Create database file and connect to it
-        do {
-            let documentDirectory =  try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database = database
-        } catch {
-            print (error)
+//MARK: -                                                Create database file and connect to it
+        
+        SQLDataBase.shared.createDataBase(){ createDb  in
+            self.database = createDb
         }
         
-/// Create table
-         let createTable = self.itemTable2.create {(table) in
-                           table.column(self.id, primaryKey: true)
-                           table.column(self.item)
-                           table.column(self.assignedTo)
-                           table.column(self.staff)
-                           table.column(self.serial)
-                           table.column(self.timecheck)
-                       }
+        SQLDataBase.shared.createTable(db: database)
         
-/// Execute  table creation in  database creation
-                       do {
-                           try self.database.run(createTable)
-                           print ("Created Table")
-                       }  catch {
-                           print (error)
-                       }
+
 /// Set Serial to N/A if no serial num
         confirmItems[3] == "" ? confirmItems[3] = "N/A" : print("Serial Num Passed!")
         
     }
     
-/// Database Variable
+
     var database:Connection!
     
-/// Table properties
-    let itemTable2  = Table("ItemCheck2")
-    let id = Expression<Int> ("id")
-    let item = Expression<String> ("item")
-    let assignedTo = Expression<String>("assignedTo")
-    let staff = Expression<String>("staff")
-    let serial = Expression<String>("serial")
-    let timecheck = Expression<String>("date")
-    
-    
-/// Creates empty array here for first view controller
-    var confirmItems = [String]()
-    
-///set time/date to convert it here in a function to then recall it over in the next function
+
     func checkOutTime()->String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm"
         return formatter.string (from:Date())
         
     }
+
+/// Creates empty array here for first view controller
+        var confirmItems = [String]()
     
 ///When Submit button is pressed here,this func breaks apart the items into individual strings ready to load into SQLite DB
     @IBAction func submitBtn(_ sender: Any) {
    
-        let i = confirmItems[0]
-        let a = confirmItems[1]
-        let c = confirmItems[2]
-        let s = confirmItems[3]
-        let t = checkOutTime()
+        let item = confirmItems[0]
+        let assignedTo = confirmItems[1]
+        let staff  = confirmItems[2]
+        let serialNum = confirmItems[3]
+        let timeCheck = checkOutTime()
        
-        print(i)
-        print(a)
-        print(c)
-        print(s)
-        print(t)
+        print(item)
+        print(assignedTo)
+        print(staff)
+        print(serialNum)
+        print(timeCheck)
        
-            let insertItem = self.itemTable2.insert(self.item <- i,self.assignedTo <- a, self.staff <- c,self.serial <- s, self.timecheck <- t  )
-                do {
-                    try self.database.run (insertItem)
-                    print("INSERTED USER")
-                } catch {
-                    print (error)
-                }
+        SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
+
 }
  
     @IBOutlet weak var submitBtn: UIButton!
    // @IBOutlet weak var confirmLabel: UILabel!
     
     let cellDetails = ["Item: ","Assigned To: ","Signed Out By: ","Serial Num: "]
-    
     
     /// These public funcs here sorts out the passed items into the tableView
     
@@ -133,16 +93,12 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         cell.detailTextLabel?.text = confirmItems[indexPath.row]
         
         cell.textLabel?.text = cellDetails[indexPath.row]
-//
-//        cell.textLabel?.textAlignment = NSTextAlignment.center
-//
+
         
         cell.textLabel?.textAlignment = .center
         
         cell.detailTextLabel?.textAlignment = .left
 
-        
-       //  cell.textLabel?.textColor = .systemTeal
         
         return (cell)
     

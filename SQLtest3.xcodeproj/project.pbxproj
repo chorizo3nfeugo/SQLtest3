@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		C01D65B923BE9E62008F2122 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C01D65B823BE9E62008F2122 /* SQLite */; };
 		C03EA6822188E9F0002F7FAC /* DatabaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */; };
+		C053915A27A483A1004D6452 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C053915927A483A1004D6452 /* CustomTableViewCell.swift */; };
+		C07BCF3C279F5B570070DAA8 /* ItemObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */; };
 		C0949FCF2742E7C600365474 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0949FCE2742E7C600365474 /* Alerts.swift */; };
+		C0A4786E2798A46100E4B9A7 /* MultipleItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A4786D2798A46100E4B9A7 /* MultipleItemsVC.swift */; };
 		C0BCD06D222882E400DBF434 /* PostSubmit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BCD06C222882E400DBF434 /* PostSubmit.swift */; };
 		C0C164B021ED096200FD83F7 /* ConfigView copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C164A921ED096200FD83F7 /* ConfigView copy.swift */; };
 		C0EE2B6F21713DB200AEED81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE2B6E21713DB200AEED81 /* AppDelegate.swift */; };
@@ -36,7 +39,10 @@
 /* Begin PBXFileReference section */
 		C01D65B723BE9DF3008F2122 /* SQLite.swift-master 3 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "SQLite.swift-master 3"; path = "../SQLite.swift-master 3"; sourceTree = "<group>"; };
 		C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFile.swift; sourceTree = "<group>"; };
+		C053915927A483A1004D6452 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemObjects.swift; sourceTree = "<group>"; };
 		C0949FCE2742E7C600365474 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		C0A4786D2798A46100E4B9A7 /* MultipleItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleItemsVC.swift; sourceTree = "<group>"; };
 		C0BCD06C222882E400DBF434 /* PostSubmit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSubmit.swift; sourceTree = "<group>"; };
 		C0C164A921ED096200FD83F7 /* ConfigView copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConfigView copy.swift"; sourceTree = "<group>"; };
 		C0EE2B6B21713DB200AEED81 /* Item Check List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Item Check List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +90,8 @@
 				C0EE2B7021713DB200AEED81 /* ViewController.swift */,
 				C0EE2B8021713FF100AEED81 /* ViewTwo.swift */,
 				C0C164A921ED096200FD83F7 /* ConfigView copy.swift */,
+				C0A4786D2798A46100E4B9A7 /* MultipleItemsVC.swift */,
+				C053915927A483A1004D6452 /* CustomTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -93,6 +101,7 @@
 			children = (
 				C0949FCE2742E7C600365474 /* Alerts.swift */,
 				C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */,
+				C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,7 +169,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = zeus;
 				TargetAttributes = {
 					C0EE2B6A21713DB200AEED81 = {
@@ -210,7 +219,10 @@
 				C0BCD06D222882E400DBF434 /* PostSubmit.swift in Sources */,
 				C03EA6822188E9F0002F7FAC /* DatabaseFile.swift in Sources */,
 				C0949FCF2742E7C600365474 /* Alerts.swift in Sources */,
+				C053915A27A483A1004D6452 /* CustomTableViewCell.swift in Sources */,
 				C0EE2B8121713FF100AEED81 /* ViewTwo.swift in Sources */,
+				C07BCF3C279F5B570070DAA8 /* ItemObjects.swift in Sources */,
+				C0A4786E2798A46100E4B9A7 /* MultipleItemsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +274,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -324,6 +337,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
