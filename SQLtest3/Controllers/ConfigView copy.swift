@@ -173,48 +173,23 @@ override func viewDidLoad() {
                                     }
                                 }
                                 
-
-                                //                            func editingChecks(textFieldCheck: (String, String)) {
-                                //
-                                //    switch textFieldCheck {
-                                //     //   Alert.showBasic(title: "Whoops!", message: "Please Input New Assignee Or Serial Number To Update!", vc: self)
-                                //    case (assignedTo!.isEmpty, !serialNum!.isEmpty):
-                                //                                        do {
-                                //                                          try self.database.run(updateSerial)
-                                //                                           Alert.showBasic(title: "\(itemName) Updated!", message: "Serial Num Updated!", vc: self)
-                                //                                            } catch {
-                                //                                           print(error)
-                                //                                            }
-                                //    case (serialNum!.isEmpty, !assignedTo!.isEmpty):
-                                //                                        do {
-                                //                                            try self.database.run(updateAssignee)
-                                //                                            Alert.showBasic(title: "\(itemName) Updated!", message: "Updated Assignee!", vc: self)
-                                //                                                } catch {
-                                //                                                        print(error)
-                                //                                            }
-                                //
-                                //        default: Alert.showBasic(title: "Whoops!", message: "Please Input New Assignee Or Serial Number To Update!", vc: self)
-                                //
-                                //                                   }
-                                //
-                                //                    print("Default")
-                                //                                }
-                                //
-                                //                                editingChecks(textEmpty: (serialNum))
-                                
-                                
+                           
                 self.checkOutItemsArray.removeAll()
                 self.viewDidLoad()
 
-        DispatchQueue.main.async { self.itemListTableView.reloadData() }
+        DispatchQueue.main.async {
+            
+            self.itemListTableView.reloadData() }
                                 
                      // Closing bracket for Edit Actions
                           }
                             
 
                 let cancel = UIAlertAction(title:"Cancel",style: .destructive,handler:{(action) -> Void in })
+                            
                           alert.addAction(action)
                           alert.addAction(cancel)
+                            
             self.present(alert, animated: true, completion: nil)
                  
             print("Done Editing Items")
@@ -291,7 +266,7 @@ override func viewDidLoad() {
 /// This changes dataBaseDeleted  variable on main viewController to true. This is triggered after user confirms to delete all items in clearAllBtn button function.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backToMainVC"{
-            if let destVC = segue.destination as? ViewController  {
+            if let destVC = segue.destination as? HomeViewController  {
                 destVC.dataBaseDeleted = true
             }
         }

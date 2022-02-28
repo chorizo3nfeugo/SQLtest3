@@ -2,16 +2,27 @@
 //  ViewController.swift
 //  SQLtest3
 //
-//  Created by zeus on 2018-10-12.
-//  Copyright © 2018 zeus. All rights reserved.
+//  Created by zeus on 2022-02-28.
+//  Copyright © 2022 zeus. All rights reserved.
 //
+
+import UIKit
+
 
 import UIKit
 import Foundation
 //import SQLite
-import MessageUI
+//import MessageUI
 
-final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate {
+ public class HomeViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate {
+  
+    
+
+    
+    static let shared = HomeViewController()
+  
+  
+  
     
 /// Creating button and textfield arrays for later manipulation
     @IBOutlet var buttonsArray: [UIButton]!
@@ -126,7 +137,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     
     
 // MARK: -                                                              viewDidLoad
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Item Check"
         
@@ -181,8 +192,11 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     }
 
     
+    
+   
+    
 /// Array of staff members here which then reloads picker once it's been changed.
-    var staffMembers = [String](){
+    public var staffMembers = [String](){
         didSet {
             theStaffPicker.reloadAllComponents()
             print("didSet: There are \(staffMembers.count) staff memebers")
@@ -198,7 +212,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     }
     
 /// Load method here to reload data into UIPicker via staffMembers
-    func loadStaffMembers() {
+    public func loadStaffMembers() {
         
         let defaults = UserDefaults.standard
         let newArray = defaults.stringArray(forKey: "SavedStaffArray") ?? [String]()
@@ -207,6 +221,8 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
         print("Loaded! Here's a list of staff Names  \(staffMembers)")
     }
        
+    
+    
     
     @IBOutlet weak var addStaffBtn: UIButton!
     @IBAction func addStaffName(_ sender: Any) {
@@ -276,21 +292,21 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     
     
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return staffMembers.count
     }
     
     
-    func pickerView(_ pickerView:UIPickerView,titleForRow row:Int, forComponent component:Int)-> String?{
+    public func pickerView(_ pickerView:UIPickerView,titleForRow row:Int, forComponent component:Int)-> String?{
         return staffMembers[row]
     }
     
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
       
 /// Alert inserted here to let user know to put in at least one staff memeber if staffMembers is empty
         if staffMembers.isEmpty {
@@ -301,7 +317,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     }
     
 ///This clicks out of the screen after you input stuff in text fields
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         theStaffPicker.reloadAllComponents()
         self.view.endEditing(true)
     }
@@ -313,7 +329,7 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     }
     
 /// This UIStoryboardSegue prepares  everything in this  view controlller and then passes it over to the  viewTwo controller
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "gotoConfirm" {
             
             let  DestViewController : ViewTwo = segue.destination as! ViewTwo
@@ -327,21 +343,6 @@ final class ViewController: UIViewController,UIPickerViewDataSource,UIPickerView
     }
     
 }
-    
-
-
-
-
-        
-
-
-    
-
-
-
-
-
-
     
 
 

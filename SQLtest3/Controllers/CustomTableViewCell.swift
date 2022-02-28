@@ -10,10 +10,46 @@ import UIKit
 
 class CustomTableViewCell: UITableViewCell {
 
+    override func prepareForReuse() {
+        itemNameLabel.text = nil
+        serialLabel.text = nil
+        qtyNum.text = nil
+        qtyLabel.text = nil
+        
+        
+        
+//        addQtyBtn.isHidden = nil
+//        removeQtyBtn.isHidden = nil
+        
+        
+    }
+    
+    
+    var removeQtyTapped:((UITableViewCell) -> Void)?
+   
+    var addQtyTapped:((UITableViewCell) -> Void)?
+ 
+    
     @IBOutlet weak var addQtyBtn: UIButton!
     
+    @IBAction func addQty(_ sender: Any) {
+        
+        addQtyTapped?(self)
+        
+        print("Add Qty Button Tapped!")
+        
+    }
+    
+    @IBOutlet weak var removeQtyBtn: UIButton!
     @IBAction func removeQty(_ sender: Any) {
         
+        
+        removeQtyTapped?(self)
+        
+        print("Remove Qty Button Tapped ! ")
+     
+    
+      
     }
     
    

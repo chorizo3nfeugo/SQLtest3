@@ -44,14 +44,18 @@ class ItemObjectMulti:ItemObject{
 
 class ItemForMulti {
     
+    // Need to adjust class here to have serial numbers grow its array according to qty number
+    
     var itemName: String
-    var serialNum: String
+    var serialNum: [String]
     var qty: Int
-    init(itemName: String, serialNum: String, qty: Int) {
+    var isOpened: Bool = false
+    
+    init(itemName: String, serialNum: [String], qty: Int, isOpened: Bool = false) {
         self.itemName = itemName
         self.serialNum = serialNum
         self.qty = qty
-      
+        self.isOpened = isOpened
     }
     
 }
