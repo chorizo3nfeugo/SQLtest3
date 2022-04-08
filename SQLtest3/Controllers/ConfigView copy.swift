@@ -17,7 +17,10 @@ final class ConfigView: UIViewController,MFMailComposeViewControllerDelegate,UIT
 
 override func viewDidLoad() {
             super.viewDidLoad()
-            
+
+//MARK:-  Will have to add loading (new column + new table) scripts here to not break tableviewDidSelect PopUp and tableView!
+ 
+
             if #available(iOS 13.0, *) {
                 view.backgroundColor = .systemBackground
             } else {
@@ -50,6 +53,8 @@ override func viewDidLoad() {
             }
             print(getRows())
         
+    SQLDataBase.shared.checkTableItems(db: database)
+    
         }
     
 //Database properties
@@ -60,6 +65,9 @@ override func viewDidLoad() {
     let staff = Expression<String>("staff")
     let serial = Expression<String>("serial")
     let timecheck = Expression<String>("date")
+    
+// adding new column... how to implement into TableView before / after script table update????
+    let returnDate = Expression<String>("returnDate")
     
    
     
@@ -220,8 +228,10 @@ override func viewDidLoad() {
         let selectedDate = (self.checkOutItemsArray[indexPath.row].timeCheck)
 ///Convert Date here to better format for display
        let convertedDate  =  convertDateFormater(selectedDate)
+ 
+//MARK:- Address this:  Will need to test out this ALERT  with OLD table and NEW table running in app to minimize potential errors!!!
         
-        let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate)" , preferredStyle: .alert )
+        let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate), with ReturnDate of  " , preferredStyle: .alert )
         
         let action = UIAlertAction(title:"Done",style: .default) { (_) in
             
@@ -286,7 +296,10 @@ override func viewDidLoad() {
                 //  let path = P_tmpdir.appending(fileName)
               
               let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-
+            
+//
+// MARK: - REMEMBER TO ADD RETURN DATE FIELD HERE WITHIN EXPORT STRING and test to see how it looks!!
+//
               let exportString = "\(record[self.id]) , \(record[self.item ]) , \(record[self.assignedTo]) , \(record[self.staff]), \(record[self.serial]), \(record[self.timecheck]) \n"
               
               csvText.append(contentsOf: exportString)
@@ -326,7 +339,6 @@ override func viewDidLoad() {
                       controller.dismiss(animated: true, completion: nil)
                   }
               }
-
         }
     } catch {
         print("Failed to export")

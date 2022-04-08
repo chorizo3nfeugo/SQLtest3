@@ -15,6 +15,24 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
     
     let homeVC = HomeViewController.shared
     
+    var itemsInCart = [ItemForMulti]()
+    
+    
+    func totalSumOfQty()-> Int{
+        
+       // var finalTotal:Int =  0
+        
+        let qtyNum = itemsInCart.map {$0.qty}
+       // add everything in array
+        
+        let sum = qtyNum.reduce(0,+)
+        
+        print("The total number of items is \(sum)")
+        
+        return sum
+    }
+    
+    
     func configStaffPicker(){
              let toolbar = UIToolbar()
              
@@ -38,24 +56,99 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+            
+            if traitCollection.userInterfaceStyle == .dark {
+                assignedTo.backgroundColor = .darkGray
+                checkedOutBy.backgroundColor = .darkGray
+                returnDate.backgroundColor = .darkGray
+            }
+        
+        } else {
+            // Fallback on earlier versions
+        }
+        
+   
+        
         self.title = "Assign & Sign Out"
         confirmBtnView.layer.cornerRadius = 6
+        totalItemsLabel.layer.cornerRadius = 6
+        totalItemsLabel.clipsToBounds = true
         theStaffPicker.delegate = self
         theStaffPicker.dataSource = self
         checkedOutBy.inputView = theStaffPicker
+// Load in number of QTY here into sumOfItemsLabel
+        
+        totalItemsLabel.text = "\(totalSumOfQty())"
+        
+      
+        
         configStaffPicker()
         homeVC.loadStaffMembers()
+        createReturnDatePicker()
         
     }
     
 
     
+    @IBOutlet weak var totalItemsLabel: UILabel!
     
     @IBOutlet weak var assignedTo: UITextField!
     
     @IBOutlet weak var checkedOutBy: UITextField!
     
+    //MARK: - Add global item return date switch and hidden text field here. 
+    
+    @IBOutlet weak var returnDate: UITextField!
+    
     @IBOutlet weak var confirmBtnView: UIButton!
+    
+    
+    
+    
+    var returnItemsDatePicker = UIDatePicker()
+    
+    func createReturnDatePicker(){
+                 let toolbar = UIToolbar()
+                 
+                 toolbar.sizeToFit()
+                 
+        ///create done button
+                 let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneDateBtn))
+        
+                 toolbar.setItems([doneBtn], animated: true)
+                 
+        /// Assign toolbar
+                 returnDate.inputAccessoryView = toolbar
+               
+        ///Assign date picker to the text field
+            returnDate.inputView = returnItemsDatePicker
+                 
+        /// Assign date picker to end date text field
+           
+                
+             }
+    
+    @objc func doneDateBtn(){
+        //Format Date here
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+
+        // Then assign new date formats to labels here
+        
+        returnDate.text = formatter.string(from:returnItemsDatePicker.date)
+        
+      //  returnDateField.text = formatter.string()
+                self.view.endEditing(true)
+        }
+    
+    
+    
+    
+    
+    
     
     @IBAction func confirmBtn(_ sender: Any) {
         
@@ -67,6 +160,30 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
         }
         
     }
+    
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMSubmitVC" {
+            
+            let  DestViewController : MultiItemSubmitVC = segue.destination as! MultiItemSubmitVC
+         
+ // Insert assignee and checkOutby label into itemsINcart
+           
+            
+            DestViewController.finalItemsToSubmit = itemsInCart
+ //
+            DestViewController.assigneeName = assignedTo.text!
+            DestViewController.staffName = checkedOutBy.text!
+ //
+            DestViewController.totalItems = totalItemsLabel.text!
+            DestViewController.returnDate = returnDate.text!
+            
+            
+        }
+        
+    }
+    
+    
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

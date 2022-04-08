@@ -337,7 +337,7 @@ import Foundation
             DestViewController.confirmItems.insert ("\(assignedToField.text!)", at:1)
             DestViewController.confirmItems.insert ("\(checkOutByField.text!)",at:2)
             DestViewController.confirmItems.insert ("\(serialNumField.text!)",at:3)
-            
+            DestViewController.confirmItems.insert("\(String(describing: returnDateField.text))", at: 4)
         }
         
     }

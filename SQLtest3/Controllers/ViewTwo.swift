@@ -16,6 +16,8 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
 
         self.title = "Confirm Item Details!"
         
+
+        
 /// Setting darkmode via assigning background to systemBackground
         if #available(iOS 13.0, *) {
                    view.backgroundColor = .systemBackground
@@ -31,11 +33,36 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
             self.database = createDb
         }
         
-        SQLDataBase.shared.createTable(db: database)
+// Old Ways to create/Add tables
         
+ ///MARK: - When testing old way to make table, make sure to insert at least 1 row of items into table, otherwise table will not be created!!!
+ // SQLDataBase.shared.createOldTable(db: database)
+
+    
+//MARK: - MUST IMPROVE THIS LOGIC TO SOMETHING LIKE: CONNECT TO DB + TABLE IF NOT CREATE TABLE / UPDATE TABLE because right now it's just creating / updating everytime we launch this screen...
+   
+        
+    SQLDataBase.shared.doesTableExist(db: database)
+   SQLDataBase.shared.createNewTable(db: database)
+
+        
+//    SQLDataBase.shared.doesTableExistBool(db: database)
+        
+  
+  
+        
+        
+        
+// New Scritpt for one shot create/update/fallbacl
+        
+//   SQLDataBase.shared.createTableOrAdd(db: database)
 
 /// Set Serial to N/A if no serial num
+        
         confirmItems[3] == "" ? confirmItems[3] = "N/A" : print("Serial Num Passed!")
+        
+        // Run script to add a new return date column to database and return print statement wether it succedded or not.
+        
         
     }
     
@@ -60,7 +87,9 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         let assignedTo = confirmItems[1]
         let staff  = confirmItems[2]
         let serialNum = confirmItems[3]
+        let returnTime = confirmItems[4]
         let timeCheck = checkOutTime()
+
        
         print(item)
         print(assignedTo)
@@ -68,14 +97,15 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         print(serialNum)
         print(timeCheck)
        
-        SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
-
+   SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
+        
+   //     SQLDataBase.shared.insertItemsV2(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck, returnDate: returnTime)
 }
  
     @IBOutlet weak var submitBtn: UIButton!
    // @IBOutlet weak var confirmLabel: UILabel!
     
-    let cellDetails = ["Item: ","Assigned To: ","Signed Out By: ","Serial Num: "]
+    let cellDetails = ["Item: ","Assigned To: ","Signed Out By: ","Serial: ","Return By: "]
     
     /// These public funcs here sorts out the passed items into the tableView
     

@@ -50,15 +50,25 @@ class ItemForMulti {
     var serialNum: [String]
     var qty: Int
     var isOpened: Bool = false
+    var assignedTo: String?
+    var checkedBy: String?
     
-    init(itemName: String, serialNum: [String], qty: Int, isOpened: Bool = false) {
+    init(itemName: String, serialNum: [String], qty: Int, isOpened: Bool = false, assignedTo: String , checkedBy: String) {
         self.itemName = itemName
         self.serialNum = serialNum
         self.qty = qty
         self.isOpened = isOpened
+        
+//      Maybe remove these last two from this class?
+        
+        self.assignedTo = assignedTo
+        self.checkedBy = checkedBy
     }
     
 }
+
+
+
 
 // MARK: - THIS CREATES A CLASS FOR EMPTY INITILIZERS
 //class ItemForMulti {

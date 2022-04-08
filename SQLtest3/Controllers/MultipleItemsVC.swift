@@ -16,20 +16,25 @@ class MultipleItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+            
+        } else {
+            // Fallback on earlier versions
+        }
+        
         self.title = "Add Items"
         
         
         assignBtnView.layer.cornerRadius = 6
-  /// You do not need the code below when using cutomTabelviewCell file, it will just break!
+                    /// You do not need the code below when using cutomTabelviewCell file, it will just break!
+        
 // self.itemsTableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "Cell")
     
-        let item1 = ItemForMulti(itemName: "SexBox", serialNum: ["N/A"], qty: 1)
- //      let item2 = ItemForMulti(itemName: "SexBox2", serialNum: ["N/A","Blegh"], qty: 2)
-//        let item3 = ItemForMulti(itemName: "SexBox3", serialNum: ["N/A","Yo mama","Yo mama 2"], qty: 3)
-       
+        let item1 = ItemForMulti(itemName: "SexBox", serialNum: ["N/A"], qty: 1, assignedTo: "N/A", checkedBy: "N/A")
+
      itemsCollection.append(item1)
-//        itemsCollection.append(item2)
-//        itemsCollection.append(item3)
+
         
         print(itemsCollection.count)
         
@@ -39,9 +44,11 @@ class MultipleItemsVC: UIViewController {
     public var itemsTest = [String]()
     
     
+  
+//MARK: -  Remember to clear this out? Or does it happen when we come back after SQL submitting and saving??
     public var itemsCollection = [ItemForMulti]()
 
-
+    
     
     
     @IBOutlet weak var itemsTableView: UITableView!
@@ -51,7 +58,7 @@ class MultipleItemsVC: UIViewController {
     
     @IBAction func addItemBtn(_ sender: Any) {
         
-        // Fix Alert? and figure out how to add new item into itemsTest array here
+   
         
         let alert = UIAlertController(title: "Add New Item!", message: "", preferredStyle: .alert)
         
@@ -67,15 +74,21 @@ class MultipleItemsVC: UIViewController {
         
         let action = UIAlertAction(title: "Ok", style: .default) {(_) in
             guard let item = alert.textFields?.first?.text else {return}
-            guard let serial = alert.textFields?.last?.text else {return}
+            guard var serial = alert.textFields?.last?.text else {return}
         
-            let newObject = ItemForMulti(itemName: item, serialNum: [serial], qty:1)
- 
+            if item.isEmpty {
+                Alert.showBasic(title: "Item name is?..", message: "Please name the item accordingly", vc: self)
+            } else {
+                
+                if serial.isEmpty {
+                    serial = "N/A"
+                }
+                let newObject = ItemForMulti(itemName: item, serialNum: [serial], qty:1,assignedTo: "N/A",checkedBy: "N/A")
+                self.add(newObject)
+                print(newObject)
+                
+            }
             
-            self.add(newObject)
-            print(newObject)
-      
-        
         }
         
         
@@ -85,10 +98,7 @@ class MultipleItemsVC: UIViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
         print(itemsCollection)
-        
-        
-        
-        
+    
     }
 
     
@@ -114,13 +124,30 @@ class MultipleItemsVC: UIViewController {
         if itemsCollection.isEmpty {
             Alert.showBasic(title: "Need item(s)!", message: "Please add an item to list before proceeding to Assigned To", vc: self)
         }
+    
         
     }
     
 
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showItemsConfirm" {
+            
+            let  DestViewController : MultiItemConfirm = segue.destination as! MultiItemConfirm
+         
+            DestViewController.itemsInCart = itemsCollection
+        }
+        
+    }
+    
+    
     
    
 }
+
+
+
+
+
 
 extension MultipleItemsVC: UITableViewDataSource {
     
@@ -186,7 +213,9 @@ extension MultipleItemsVC: UITableViewDataSource {
                 cell.addQtyBtn.isHidden = false
                 cell.removeQtyBtn.isHidden = false
             }
-// MARK: - CAN We condense the tappedbuttons to just one switch / if else control statement?
+            
+            
+// MARK: REFACTOR? - CAN We condense the tappedbuttons to just one switch / if else control statement?
 
             cell.removeQtyTapped = { [self] (cell) in
   
@@ -248,9 +277,7 @@ extension MultipleItemsVC: UITableViewDataSource {
             
             let rowsCount = self.itemsTableView.numberOfRows(inSection: indexPath.section)
             
-//            let serialNumbers = itemsCollection[indexPath.section]
-//
-//            self.itemsTableView.reloadRows(at: indexPath, with: .fade)
+
             
             
             for row in 1..<rowsCount {
@@ -270,7 +297,7 @@ extension MultipleItemsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-//MARK: - NEED TO BE ABLE TO EDIT NAME OF ITEM WHILE MAINTIAINING ABILITY TO EDIT ROWS IN SERIAL NUMS ALSO HIDE BUTTONS
+
         
         let selectedItem = itemsCollection[indexPath.section]
         
@@ -314,7 +341,11 @@ extension MultipleItemsVC: UITableViewDelegate {
             print("Done Editing Items")
             
         }
-        
+//MARK: - ADD CALANDER/ REDURN DATE TO EDIT ROWS?
+//        let dateReturnItem = UIContextualAction(style: .normal, title: "Return Date?") { (action,view, nil) in
+//            <#code#>
+//        }
+//
      
         editItem.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
    
@@ -332,8 +363,6 @@ extension MultipleItemsVC: UITableViewDelegate {
         
         if indexPath.row == 0 {
      
-            
-            
             if itemsCollection[indexPath.section].qty == 1 {
                 
                 itemsCollection[indexPath.section].isOpened = false
@@ -346,6 +375,8 @@ extension MultipleItemsVC: UITableViewDelegate {
             } else {
          
                 itemsCollection[indexPath.section].isOpened = !itemsCollection[indexPath.section].isOpened
+                
+//MARK: -  Call CustomTableViewCell to force run the resuse cell here???? !
                 
                 itemsTableView.reloadSections([indexPath.section], with: .fade)
                 

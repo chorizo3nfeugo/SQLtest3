@@ -11,6 +11,8 @@ import UIKit
 class CustomTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
+        
+        
         itemNameLabel.text = nil
         serialLabel.text = nil
         qtyNum.text = nil
@@ -75,6 +77,10 @@ class CustomTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+      
+        
+        
+        
         // Configure the view for the selected state
     }
 

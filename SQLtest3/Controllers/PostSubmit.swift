@@ -12,11 +12,17 @@ import UIKit
 final class Postsubmition: UIViewController {
     
    
+    
 // MARK: - ViewDidLoad
+    
+   
+    var finalLabelText = "Item Submitted & Saved!"
+    var titleLabelText = "Item Submitted!"
     
     override func viewDidLoad() {
         
-        self.title = "Item Saved!"
+        self.title = titleLabelText
+        itemCheckLabel.text = finalLabelText
         
         super.viewDidLoad()
         
@@ -31,6 +37,7 @@ final class Postsubmition: UIViewController {
         itemCheckLabel.layer.cornerRadius = 6
         
         self.navigationItem.setHidesBackButton(true, animated:true)
+        
         
     }
     

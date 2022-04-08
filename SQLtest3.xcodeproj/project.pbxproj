@@ -11,6 +11,7 @@
 		C03EA6822188E9F0002F7FAC /* DatabaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */; };
 		C053915A27A483A1004D6452 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C053915927A483A1004D6452 /* CustomTableViewCell.swift */; };
 		C07BCF3C279F5B570070DAA8 /* ItemObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */; };
+		C085971C27D12F190062FC07 /* TempItemObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C085971B27D12F190062FC07 /* TempItemObjects.swift */; };
 		C0949FCF2742E7C600365474 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0949FCE2742E7C600365474 /* Alerts.swift */; };
 		C0A4786E2798A46100E4B9A7 /* MultipleItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A4786D2798A46100E4B9A7 /* MultipleItemsVC.swift */; };
 		C0B8D95327CD29A60067E7DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B8D95227CD29A60067E7DB /* HomeViewController.swift */; };
@@ -43,6 +44,7 @@
 		C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFile.swift; sourceTree = "<group>"; };
 		C053915927A483A1004D6452 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemObjects.swift; sourceTree = "<group>"; };
+		C085971B27D12F190062FC07 /* TempItemObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempItemObjects.swift; sourceTree = "<group>"; };
 		C0949FCE2742E7C600365474 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		C0A4786D2798A46100E4B9A7 /* MultipleItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleItemsVC.swift; sourceTree = "<group>"; };
 		C0B8D95227CD29A60067E7DB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				C0949FCE2742E7C600365474 /* Alerts.swift */,
 				C03EA6812188E9F0002F7FAC /* DatabaseFile.swift */,
 				C07BCF3B279F5B570070DAA8 /* ItemObjects.swift */,
+				C085971B27D12F190062FC07 /* TempItemObjects.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			files = (
 				C0B8D95327CD29A60067E7DB /* HomeViewController.swift in Sources */,
 				C0C164B021ED096200FD83F7 /* ConfigView copy.swift in Sources */,
+				C085971C27D12F190062FC07 /* TempItemObjects.swift in Sources */,
 				C0EE2B6F21713DB200AEED81 /* AppDelegate.swift in Sources */,
 				C0BCD06D222882E400DBF434 /* PostSubmit.swift in Sources */,
 				C03EA6822188E9F0002F7FAC /* DatabaseFile.swift in Sources */,
