@@ -49,9 +49,7 @@ class TempItemObjects {
     
     // Initialize total sum here?
     
-    
-    
-    
+
     
     func totalSumOfQty(){
         

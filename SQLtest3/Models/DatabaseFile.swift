@@ -76,24 +76,24 @@ public class SQLDataBase {
         }
     }
     
-    func addColumn(db:Connection){
-       
-        let addReturnDate = self.itemTable2.addColumn(Expression<String?>(returnDate))
-        let table = Table("ItemCheck2")
-        do {
-            let itExists = try db.scalar(table.exists)
-            if itExists {
-                do {
-                    try db.run(addReturnDate)
-                } catch {
-                    print("Could not add column because exists or error")
-                }
-            }
-        } catch {
-        print("Did not even run the script at all for new column")
-        }
-    }
-    
+//    func addColumn(db:Connection){
+//
+//        let addReturnDate = self.itemTable2.addColumn(Expression<String?>(returnDate))
+//        let table = Table("ItemCheck2")
+//        do {
+//            let itExists = try db.scalar(table.exists)
+//            if itExists {
+//                do {
+//                    try db.run(addReturnDate)
+//                } catch {
+//                    print("Could not add column because exists or error")
+//                }
+//            }
+//        } catch {
+//        print("Did not even run the script at all for new column")
+//        }
+//    }
+//    
     
     
     func createNewTable(db:Connection) {
@@ -108,9 +108,12 @@ public class SQLDataBase {
                           table.column(self.returnDate)
 
         }
+        
+        let addReturnDate = self.itemTable2.addColumn(Expression<String?>(returnDate))
     
         do {
             try db.run(createTable)
+            try db.run(addReturnDate)
             print("created New Table with returnDate column")
         } catch {
             
@@ -141,11 +144,8 @@ public class SQLDataBase {
                           table.column(self.staff)
                           table.column(self.serial)
                           table.column(self.timecheck)
-                        
                       }
-        
         /// Execute  table creation in  database creation
-
                               do {
                                 try db.run(createTable)
                               
@@ -155,7 +155,6 @@ public class SQLDataBase {
                                     print("Table did not create or already created!")
                               }
     
-        
     }
    
     func doesTableExist(db: Connection){
@@ -238,18 +237,19 @@ public class SQLDataBase {
     let returnDate = Expression<String>("returnDate")
     
     
-//    
-//    func addColumn(db:Connection){
-//        
-//    do {
-//        let addReturnDate = self.itemTable2.addColumn(self.returnDate)
-//        
-//        try db.run(addReturnDate)
-//        
-//       } catch {
-//           print(error)
-//       }
-//    }
+    
+    func addColumn(db:Connection){
+
+    do {
+        
+        let addReturnDate = self.itemTable2.addColumn(Expression<String?>(returnDate))
+
+        try db.run(addReturnDate)
+
+       } catch {
+           print(error)
+       }
+    }
     
     
 }
@@ -270,6 +270,8 @@ struct ItemContainter {
     let timeCheck: String
     
     let serialNum:String
+    
+   let returnDate:String
 }
 
 

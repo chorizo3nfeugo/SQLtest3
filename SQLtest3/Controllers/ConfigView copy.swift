@@ -43,7 +43,7 @@ override func viewDidLoad() {
                     let records = try self.database.prepare(self.itemTable2.order(id.desc))
                     for record in records {
                         
-                        checkOutItemsArray.append(ItemContainter(idNum: record[self.id], itemName: "\(record[self.item])", assigned: "\(record[self.assignedTo])", staff: "\(record[self.staff])", timeCheck: "\(record[self.timecheck])",serialNum: "\(record[self.serial])"))
+                        checkOutItemsArray.append(ItemContainter(idNum: record[self.id], itemName: "\(record[self.item])", assigned: "\(record[self.assignedTo])", staff: "\(record[self.staff])", timeCheck: "\(record[self.timecheck])",serialNum: "\(record[self.serial])", returnDate: "\(record[self.returnDate])" ))
                     }
                     print(checkOutItemsArray.count)
                 } catch {
@@ -212,8 +212,7 @@ override func viewDidLoad() {
     
     
 ///Date Converter function
-    func convertDateFormater(_ date: String) -> String
-    {
+    func convertDateFormater(_ date: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
         let date = dateFormatter.date(from: date)
@@ -221,25 +220,86 @@ override func viewDidLoad() {
         return  dateFormatter.string(from: date!)
 
     }
+    
+    func convertReturnDate(_ date: String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        guard let date = dateFormatter.date(from: date) else { return "N/A"}
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        return dateFormatter.string(from: date)
+    
+    }
 
 ///Shows details of item when selected.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
   
         let selectedDate = (self.checkOutItemsArray[indexPath.row].timeCheck)
-///Convert Date here to better format for display
        let convertedDate  =  convertDateFormater(selectedDate)
- 
-//MARK:- Address this:  Will need to test out this ALERT  with OLD table and NEW table running in app to minimize potential errors!!!
         
-        let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate), with ReturnDate of  " , preferredStyle: .alert )
+        let returnDate = (self.checkOutItemsArray[indexPath.row].returnDate)
+        let convertedRDate = convertReturnDate(returnDate)
+
+        
+//MARK:- Address this:  Will need to test out this ALERT  with OLD table and NEW table running in app to minimize potential errors!!! Will need to run script on the list button.
+//MARK:- Need to create different date converter for return date because RDate only tracks days NOT days+hours thats why this didSelectFunction doesnt work
+// MARK: - THe N/A default entry is breaking the list button here. Must figure out how to get the listview to appear at least
+        
+        // if covertedReturnDate returns N/A then we use one constant. if it returns with date then we use the other one....
+        
+        func alertConstant(dateCheck:String) -> UIAlertController {
+            
+            var alert = UIAlertController()
+            
+        
+            
+            if convertedRDate == "N/A" {
+                let alert1 = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: """
+    Has Been Assigned To: \(checkOutItemsArray[indexPath.row].assigned)
+    Serial #: \(checkOutItemsArray[indexPath.row].serialNum)
+    Checked Out By: \(checkOutItemsArray[indexPath.row].staff)
+    On \(convertedDate)
+                                   
+ """ , preferredStyle: .alert )
+               
+                alert = alert1
+                return alert
+            } else if convertedRDate != "N/A" {
+                let alert2 = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: """
+    Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned)
+    Serial #: \(checkOutItemsArray[indexPath.row].serialNum)
+    Checked Out By: \(checkOutItemsArray[indexPath.row].staff)
+    On \(convertedDate)
+    Return Date of \(convertedRDate)
+ """ , preferredStyle: .alert )
+                
+                alert = alert2
+               
+                return alert
+            }
+            
+    
+            return alert
+        }
+        
+        
+        
+     //   let alert = UIAlertController(title:"\(checkOutItemsArray[indexPath.row].itemName)", message: " Has Been Assigned To \(checkOutItemsArray[indexPath.row].assigned). With Serial Number \(checkOutItemsArray[indexPath.row].serialNum).   Checked Out By \(checkOutItemsArray[indexPath.row].staff) On \(convertedDate), with ReturnDate of \(convertedRDate) " , preferredStyle: .alert )
         
         let action = UIAlertAction(title:"Done",style: .default) { (_) in
             
         }
+    
+        let finalAlert = alertConstant(dateCheck: convertedRDate)
         
-        alert.addAction(action)
-        present(alert,animated: true,completion: nil)
-    }
+        finalAlert.addAction(action)
+        
+        present(finalAlert,animated: true,completion: nil)
+        
+        }
+        
+
+    
 
     
 /// This clears all items in database
@@ -289,7 +349,7 @@ override func viewDidLoad() {
     do {
           let records = try self.database.prepare(self.itemTable2)
           
-          var csvText = "logID,item,assignedTo,staff,serial,date\r\n"
+          var csvText = "logID,Item,AssignedTo,Staff,Serial,Date,ReturnDate\r\n"
           
           for record in records {
               let fileName = "exportedItems.csv"
@@ -300,7 +360,7 @@ override func viewDidLoad() {
 //
 // MARK: - REMEMBER TO ADD RETURN DATE FIELD HERE WITHIN EXPORT STRING and test to see how it looks!!
 //
-              let exportString = "\(record[self.id]) , \(record[self.item ]) , \(record[self.assignedTo]) , \(record[self.staff]), \(record[self.serial]), \(record[self.timecheck]) \n"
+              let exportString = "\(record[self.id]) , \(record[self.item ]) , \(record[self.assignedTo]) , \(record[self.staff]), \(record[self.serial]), \(record[self.timecheck]),\(record[self.returnDate]) \n"
               
               csvText.append(contentsOf: exportString)
               

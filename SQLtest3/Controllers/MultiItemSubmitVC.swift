@@ -52,6 +52,7 @@ class MultiItemSubmitVC: UIViewController {
         
         assigneeLabel.text = assigneeName
         staffLabel.text = staffName
+        returnDateLbl.text = returnDate
         
 //MARK: - Open SQLite Database
         SQLDataBase.shared.createDataBase(){ createDb  in
@@ -65,6 +66,8 @@ class MultiItemSubmitVC: UIViewController {
     }
     
     @IBOutlet weak var assigneeLabel: UILabel!
+    
+    @IBOutlet weak var returnDateLbl: UILabel!
     
     @IBOutlet weak var staffLabel: UILabel!
     

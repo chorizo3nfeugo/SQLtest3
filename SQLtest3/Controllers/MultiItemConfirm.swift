@@ -176,6 +176,7 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
  //
             DestViewController.totalItems = totalItemsLabel.text!
             DestViewController.returnDate = returnDate.text!
+        
             
             
         }

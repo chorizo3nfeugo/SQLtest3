@@ -35,32 +35,24 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         
 // Old Ways to create/Add tables
         
- ///MARK: - When testing old way to make table, make sure to insert at least 1 row of items into table, otherwise table will not be created!!!
- // SQLDataBase.shared.createOldTable(db: database)
 
-    
 //MARK: - MUST IMPROVE THIS LOGIC TO SOMETHING LIKE: CONNECT TO DB + TABLE IF NOT CREATE TABLE / UPDATE TABLE because right now it's just creating / updating everytime we launch this screen...
+// THis script "CreateNewTable" works with old DB too! So should just only use this going forward
    
+        SQLDataBase.shared.createNewTable(db: database)
+   
+    //    SQLDataBase.shared.createOldTable(db: database)
         
-    SQLDataBase.shared.doesTableExist(db: database)
-   SQLDataBase.shared.createNewTable(db: database)
-
-        
-//    SQLDataBase.shared.doesTableExistBool(db: database)
-        
+        //     SQLDataBase.shared.addColumn(db: database)
   
   
         
         
-        
-// New Scritpt for one shot create/update/fallbacl
-        
-//   SQLDataBase.shared.createTableOrAdd(db: database)
 
 /// Set Serial to N/A if no serial num
         
         confirmItems[3] == "" ? confirmItems[3] = "N/A" : print("Serial Num Passed!")
-        
+        confirmItems[4] == "" ? confirmItems[4] = " N/A " : print("Return Date Passed")
         // Run script to add a new return date column to database and return print statement wether it succedded or not.
         
         
@@ -77,6 +69,8 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         
     }
 
+   
+    
 /// Creates empty array here for first view controller
         var confirmItems = [String]()
     
@@ -91,15 +85,11 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         let timeCheck = checkOutTime()
 
        
-        print(item)
-        print(assignedTo)
-        print(staff)
-        print(serialNum)
-        print(timeCheck)
+        print("\(item) was assigned to \(assignedTo) and checked out by \(staff) with serial number \(serialNum) at \(timeCheck) and will be returned on \(returnTime)")
        
-   SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
+//   SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
         
-   //     SQLDataBase.shared.insertItemsV2(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck, returnDate: returnTime)
+       SQLDataBase.shared.insertItemsV2(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck, returnDate: returnTime)
 }
  
     @IBOutlet weak var submitBtn: UIButton!

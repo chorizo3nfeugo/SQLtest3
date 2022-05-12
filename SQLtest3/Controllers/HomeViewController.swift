@@ -57,6 +57,8 @@ import Foundation
     
     @IBOutlet weak var returnDateLabel: UILabel!
     @IBOutlet weak var returnSwitchState: UISwitch!
+    
+    
     @IBAction func returnDateSwitch(_ state: UISwitch) {
         
         if state.isOn {
@@ -67,6 +69,7 @@ import Foundation
         } else{
             returnDateLabel.text = "Return Date?"
             returnDateField.isHidden = true
+            returnDateField.text = nil
         }
     }
     
@@ -98,6 +101,7 @@ import Foundation
     var returnDatePicker = UIDatePicker()
     
     func createReturnDatePicker(){
+        
                  let toolbar = UIToolbar()
                  
                  toolbar.sizeToFit()
@@ -114,7 +118,7 @@ import Foundation
             returnDateField.inputView = returnDatePicker
                  
         /// Assign date picker to end date text field
-           
+        returnDatePicker.datePickerMode = .date
                 
              }
 
@@ -123,6 +127,8 @@ import Foundation
         @objc func doneDateBtn(){
             //Format Date here
             let formatter = DateFormatter()
+            
+            
             formatter.dateStyle = .short
             formatter.timeStyle = .none
 
@@ -275,6 +281,7 @@ import Foundation
     }
     
     @IBOutlet weak var confirmBtn: UIButton!
+    
     @IBAction func confirmBtnCheck(_ sender: Any) {
         
 ///These statments check if all fields are filled out accordingly.
@@ -288,6 +295,9 @@ import Foundation
             
             Alert.showBasic(title: "Missing Data! ", message: "Please make sure item is assigned to someone and is signed out by appropriate staff!", vc: self)
         }
+        
+        //MARK:- Need to add return date check to make sure user selects a date in the future! Must error out if past is selected
+        
 }
     
     
@@ -337,7 +347,7 @@ import Foundation
             DestViewController.confirmItems.insert ("\(assignedToField.text!)", at:1)
             DestViewController.confirmItems.insert ("\(checkOutByField.text!)",at:2)
             DestViewController.confirmItems.insert ("\(serialNumField.text!)",at:3)
-            DestViewController.confirmItems.insert("\(String(describing: returnDateField.text))", at: 4)
+            DestViewController.confirmItems.insert("\(returnDateField.text!)", at: 4)
         }
         
     }
