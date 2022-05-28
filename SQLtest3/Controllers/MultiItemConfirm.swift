@@ -18,7 +18,7 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
     var itemsInCart = [ItemForMulti]()
     
     
-    func totalSumOfQty()-> Int{
+    func totalSumOfQty()-> Int {
         
        // var finalTotal:Int =  0
         
@@ -64,6 +64,9 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
                 checkedOutBy.backgroundColor = .darkGray
                 returnDate.backgroundColor = .darkGray
             }
+// Adjust size of DatePicker
+            returnItemsDatePicker.preferredDatePickerStyle = .wheels
+            returnItemsDatePicker.sizeToFit()
         
         } else {
             // Fallback on earlier versions
@@ -81,8 +84,6 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
 // Load in number of QTY here into sumOfItemsLabel
         
         totalItemsLabel.text = "\(totalSumOfQty())"
-        
-      
         
         configStaffPicker()
         homeVC.loadStaffMembers()
@@ -127,6 +128,7 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
                  
         /// Assign date picker to end date text field
            
+            returnItemsDatePicker.datePickerMode = .date
                 
              }
     
@@ -144,22 +146,48 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
                 self.view.endEditing(true)
         }
     
+    func currentTime()->String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter.string (from:Date())
+    }
     
-    
-    
+    func returnDateCheck(chosenDate: String)-> Bool {
+
+        var dateSwitch = false
+
+        if chosenDate == "" {
+            
+           return dateSwitch
+        } else if chosenDate < currentTime() {
+            dateSwitch = true
+            return dateSwitch
+        } else {
+            return dateSwitch
+        }
+        
+    }
     
     
     
     @IBAction func confirmBtn(_ sender: Any) {
-        
+         
+        let assignCheck = assignedTo.text?.isEmpty
+        let checkOutCheck = checkedOutBy.text?.isEmpty
+        let dateCheck = returnDateCheck(chosenDate: returnDate.text!)
+
         switch true {
-        case assignedTo.text?.isEmpty: Alert.showBasic(title: "Missing Assigned To!", message: "Fill in Assiged To! Where/who are these items going to?", vc: self)
-        case checkedOutBy.text?.isEmpty: Alert.showBasic(title: "Missing Data", message: "Select Staff memeber for Signed out by!", vc: self)
+        case assignCheck: Alert.showBasic(title: "Missing Assigned To!", message: "Fill in Assiged To! Where/who are these items going to?", vc: self)
+        case checkOutCheck: Alert.showBasic(title: "Missing Data", message: "Select Staff memeber for Signed out by!", vc: self)
+        case dateCheck: Alert.showBasic(title: "Time Traveller eh?", message: "Please select a date in the future for return date!", vc: self)
         default: print("default triggered")
-            
-        }
+            }
         
     }
+    
+    
+    
     
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMSubmitVC" {

@@ -76,6 +76,8 @@ import Foundation
     var dataBaseDeleted:Bool = false
 
     var theStaffPicker = UIPickerView()
+    
+    
     func configPicker(){
              let toolbar = UIToolbar()
              
@@ -95,6 +97,26 @@ import Foundation
         print("DONE BUTTON CREATED")
         self.view.endEditing(true)
         }
+    
+    //Mark:- Current Time check
+    
+    func checkOutTime()->String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        
+     //   formatter.dateFormat = "MM-dd-yyyy HH:mm"
+        return formatter.string (from:Date())
+    }
+    
+    
+//    func returnDateTime() -> Date {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//        let date = dateFormatter.date(from:isoDate)!
+//    }
+    
     
 
    // MARK:-                    ReturnDate initializers
@@ -132,12 +154,10 @@ import Foundation
             formatter.dateStyle = .short
             formatter.timeStyle = .none
 
-            // Then assign new date formats to labels here
-            
+// Then assign new date formats to labels here
             returnDateField.text = formatter.string(from:returnDatePicker.date)
-            
-          //  returnDateField.text = formatter.string()
-        
+//  returnDateField.text = formatter.string()
+//  print(returnDateField.text)
                     self.view.endEditing(true)
             }
     
@@ -153,6 +173,11 @@ import Foundation
 ///    Darkmode check
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
+            
+            returnDatePicker.preferredDatePickerStyle = .inline
+            returnDatePicker.sizeToFit()
+
+            
         } else {
             // Fallback on earlier versions
         }
@@ -296,7 +321,17 @@ import Foundation
             Alert.showBasic(title: "Missing Data! ", message: "Please make sure item is assigned to someone and is signed out by appropriate staff!", vc: self)
         }
         
+        
         //MARK:- Need to add return date check to make sure user selects a date in the future! Must error out if past is selected
+        
+        
+        if returnDateField.text! < checkOutTime() {
+            
+            print(checkOutTime())
+            
+            Alert.showBasic(title: "You a Time Traveller?", message: "Please select a date in the future to return said item", vc: self)
+            
+        }
         
 }
     

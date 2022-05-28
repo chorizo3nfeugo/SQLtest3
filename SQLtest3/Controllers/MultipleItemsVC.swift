@@ -367,7 +367,6 @@ extension MultipleItemsVC: UITableViewDelegate {
                 
                 itemsCollection[indexPath.section].isOpened = false
                 
-                
                 itemsTableView.reloadSections([indexPath.section], with: .fade)
                 
                 print("No need to expand section \(indexPath.section) but you are at row \([indexPath.row]) at section  \(indexPath.section) ")
@@ -448,46 +447,7 @@ extension MultipleItemsVC: UITableViewDelegate {
 
 
 
-
-//            if editingStyle == .delete {
-//
-//             //   itemsCollection.remove(at: indexPath.section - 1)
-//
-//                itemsCollection[indexPath.section].serialNum[indexPath.row]
-//
-//                itemsCollection.remove(at: indexPath.section)
-//
-//                let indexSet = IndexSet(arrayLiteral: indexPath.section)
-//
-//                itemsTableView.deleteSections(indexSet, with: .left)
-//
-//                self.itemsTableView.reloadData()
-//            }
-//
-            
-//            guard editingStyle == .delete else {return}
-//
-//            itemsTableView.deleteRows(at: [indexPath], with: .automatic)
-//
-//            itemsCollection.remove(at: indexPath.row)
-//
-//            self.itemsTableView.reloadData()
-            
-      
-    
-
     
  
-/// Use this if you are
-//class SubtitleTableViewCell: UITableViewCell {
-//
-//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-//        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
     
 
