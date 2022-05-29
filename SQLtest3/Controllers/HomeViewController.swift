@@ -62,7 +62,7 @@ import Foundation
     @IBAction func returnDateSwitch(_ state: UISwitch) {
         
         if state.isOn {
-            returnDateLabel.text = "Return Date"
+            returnDateLabel.text = "Return Date:"
             returnDateField.isHidden = false
            // createReturnDatePicker()
            
@@ -305,11 +305,36 @@ import Foundation
         
     }
     
-    @IBOutlet weak var confirmBtn: UIButton!
+    func currentTime()->String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter.string (from:Date())
+    }
     
+    func returnDateCheck(chosenDate: String)-> Bool {
+
+        var dateSwitch = false
+
+        if chosenDate == "" {
+            
+           return dateSwitch
+        } else if chosenDate < currentTime() {
+            dateSwitch = true
+            return dateSwitch
+        } else {
+            return dateSwitch
+        }
+        
+    }
+    
+    
+    @IBOutlet weak var confirmBtn: UIButton!
     @IBAction func confirmBtnCheck(_ sender: Any) {
         
 ///These statments check if all fields are filled out accordingly.
+        
+        let dateCheck = returnDateCheck(chosenDate: returnDateField.text!)
         
         if itemNameField.text!.isEmpty || assignedToField.text!.isEmpty {
             
@@ -320,17 +345,11 @@ import Foundation
             
             Alert.showBasic(title: "Missing Data! ", message: "Please make sure item is assigned to someone and is signed out by appropriate staff!", vc: self)
         }
-        
-        
-        //MARK:- Need to add return date check to make sure user selects a date in the future! Must error out if past is selected
-        
-        
-        if returnDateField.text! < checkOutTime() {
             
-            print(checkOutTime())
-            
+//MARK:- Need to add return date check to make sure user selects a date in the future! Must error out if past is selected
+        if dateCheck == true  {
+           //  print(checkOutTime())
             Alert.showBasic(title: "You a Time Traveller?", message: "Please select a date in the future to return said item", vc: self)
-            
         }
         
 }

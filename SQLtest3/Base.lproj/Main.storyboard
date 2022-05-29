@@ -389,21 +389,35 @@
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <size key="shadowOffset" width="3" height="2"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BRw-n8-Skl">
-                                <rect key="frame" x="67" y="546" width="280" height="62.333333333333371"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hNf-DR-gEV">
+                                <rect key="frame" x="67" y="541" width="280" height="73"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return Date:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zo2-eC-MZi">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="20.333333333333332"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="280" id="0CK-2b-KsT"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="wH3-Az-qba"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="lzr-f5-gG9">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return Date?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zo2-eC-MZi">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="wH3-Az-qba"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ISJ-tk-h6Q">
+                                                <rect key="frame" x="115" y="0.0" width="49" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="bMx-Pr-iDo"/>
+                                                    <constraint firstAttribute="width" constant="47" id="lkl-lb-A5Q"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="returnDateSwitch:" destination="qfq-Co-tys" eventType="valueChanged" id="gM9-Ar-y0r"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Return Date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gs3-xQ-BbV">
-                                        <rect key="frame" x="0.0" y="28.333333333333371" width="280" height="34"/>
+                                        <rect key="frame" x="0.0" y="39" width="280" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="280" id="D0f-HZ-GLK"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="Vqb-nb-yLc"/>
@@ -413,19 +427,15 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j45-6p-dPy">
-                                <rect key="frame" x="183" y="624" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Pl9-sq-rBL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="hNf-DR-gEV" firstAttribute="top" secondItem="3fu-wd-VuY" secondAttribute="bottom" constant="30" id="13c-6a-NcW"/>
                             <constraint firstItem="3fu-wd-VuY" firstAttribute="centerX" secondItem="Pl9-sq-rBL" secondAttribute="centerX" id="37h-yj-ATf"/>
-                            <constraint firstItem="zo2-eC-MZi" firstAttribute="centerX" secondItem="3fu-wd-VuY" secondAttribute="centerX" id="EMQ-Qh-J0Z"/>
                             <constraint firstItem="EoE-b6-dmM" firstAttribute="centerX" secondItem="Pl9-sq-rBL" secondAttribute="centerX" id="Fkk-gG-7fl"/>
+                            <constraint firstItem="hNf-DR-gEV" firstAttribute="leading" secondItem="dyk-Lc-D7S" secondAttribute="leading" id="GXD-tS-peJ"/>
                             <constraint firstItem="TV0-mR-S0i" firstAttribute="centerX" secondItem="Pl9-sq-rBL" secondAttribute="centerX" id="HXF-Jk-jiR"/>
-                            <constraint firstItem="BRw-n8-Skl" firstAttribute="top" secondItem="3fu-wd-VuY" secondAttribute="bottom" constant="35" id="QHD-VP-YWX"/>
                             <constraint firstItem="3fu-wd-VuY" firstAttribute="centerY" secondItem="Pl9-sq-rBL" secondAttribute="centerY" id="SsD-aP-OoZ"/>
                             <constraint firstItem="3fu-wd-VuY" firstAttribute="top" secondItem="5wC-OZ-hci" secondAttribute="bottom" constant="15" id="ZOs-uu-vpa"/>
                             <constraint firstItem="5wC-OZ-hci" firstAttribute="centerX" secondItem="Pl9-sq-rBL" secondAttribute="centerX" id="azQ-m8-iBt"/>
@@ -439,6 +449,7 @@
                         <outlet property="checkedOutBy" destination="dyk-Lc-D7S" id="ruN-x4-m1S"/>
                         <outlet property="confirmBtnView" destination="TV0-mR-S0i" id="Dkp-52-RxY"/>
                         <outlet property="returnDate" destination="gs3-xQ-BbV" id="E3w-AU-61l"/>
+                        <outlet property="returnDateLabel" destination="zo2-eC-MZi" id="7dA-Fn-xfW"/>
                         <outlet property="totalItemsLabel" destination="EoE-b6-dmM" id="OzD-ih-vDV"/>
                     </connections>
                 </viewController>

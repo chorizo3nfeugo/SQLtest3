@@ -55,6 +55,8 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        returnDate.isHidden = true
 
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
@@ -65,7 +67,7 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
                 returnDate.backgroundColor = .darkGray
             }
 // Adjust size of DatePicker
-            returnItemsDatePicker.preferredDatePickerStyle = .wheels
+            returnItemsDatePicker.preferredDatePickerStyle = .inline
             returnItemsDatePicker.sizeToFit()
         
         } else {
@@ -103,8 +105,23 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
     
     @IBOutlet weak var returnDate: UITextField!
     
+    @IBOutlet weak var returnDateLabel: UILabel!
     @IBOutlet weak var confirmBtnView: UIButton!
     
+    @IBAction func returnDateSwitch(_ state: UISwitch) {
+        
+        if state.isOn {
+            returnDateLabel.text = "Return Date:"
+            returnDate.isHidden = false
+           // createReturnDatePicker()
+           
+        } else{
+            returnDateLabel.text = "Return Date?"
+            returnDate.isHidden = true
+            returnDate.text = ""
+        }
+        
+    }
     
     
     
