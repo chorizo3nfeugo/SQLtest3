@@ -275,6 +275,23 @@ struct ItemContainter {
 }
 
 
+struct ItemContainter1 {
+    
+    let idNum:Int
+    
+    let itemName:String
+    
+    let assigned:String
+    
+    let staff:String
+    
+    let timeCheck: String
+    
+    let serialNum:String
+    
+}
+
+
 
 
 

@@ -33,6 +33,7 @@ final class Postsubmition: UIViewController {
                }
                
         returnHomeBtn.layer.cornerRadius = 6
+        returnHomeBtn.clipsToBounds = true
         itemCheckLabel.clipsToBounds = true
         itemCheckLabel.layer.cornerRadius = 6
         

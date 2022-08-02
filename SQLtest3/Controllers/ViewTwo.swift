@@ -39,11 +39,11 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
 //MARK: - MUST IMPROVE THIS LOGIC TO SOMETHING LIKE: CONNECT TO DB + TABLE IF NOT CREATE TABLE / UPDATE TABLE because right now it's just creating / updating everytime we launch this screen...
 // THis script "CreateNewTable" works with old DB too! So should just only use this going forward
    
-        SQLDataBase.shared.createNewTable(db: database)
+    SQLDataBase.shared.createNewTable(db: database)
    
-    //    SQLDataBase.shared.createOldTable(db: database)
+   //    SQLDataBase.shared.createOldTable(db: database)
         
-        //     SQLDataBase.shared.addColumn(db: database)
+   //     SQLDataBase.shared.addColumn(db: database)
   
   
         
@@ -85,7 +85,7 @@ final class ViewTwo: UIViewController,UITableViewDelegate,UITableViewDataSource 
         let timeCheck = checkOutTime()
 
        
-        print("\(item) was assigned to \(assignedTo) and checked out by \(staff) with serial number \(serialNum) at \(timeCheck) and will be returned on \(returnTime)")
+  //      print("\(item) was assigned to \(assignedTo) and checked out by \(staff) with serial number \(serialNum) at \(timeCheck) and will be returned on \(returnTime)")
        
 //   SQLDataBase.shared.insertItems(db: database, item: item, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck)
         

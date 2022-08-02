@@ -49,10 +49,14 @@ class MultiItemSubmitVC: UIViewController {
         
         self.title = "Submit \(totalItems) Items"
         submitBtnView.layer.cornerRadius = 6
-        
+        submitBtnView.clipsToBounds = true
         assigneeLabel.text = assigneeName
         staffLabel.text = staffName
+        
         returnDateLbl.text = returnDate
+        
+        
+        
         
 //MARK: - Open SQLite Database
         SQLDataBase.shared.createDataBase(){ createDb  in

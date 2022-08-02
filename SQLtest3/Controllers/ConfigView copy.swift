@@ -24,20 +24,18 @@ override func viewDidLoad() {
             if #available(iOS 13.0, *) {
                 view.backgroundColor = .systemBackground
             } else {
-                
             }
             exportBtn.layer.cornerRadius = 6
             clearAllBtn.layer.cornerRadius = 6
-            
-            do {
-                let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true )
-                let fileUrl = documentDirectory.appendingPathComponent("ItemCheck").appendingPathExtension("sqlite3")
-                let database = try Connection(fileUrl.path)
-                self.database = database
-            } catch {
-                print(error)
-            }
-            
+    
+    SQLDataBase.shared.createDataBase(){ createDb  in
+        self.database = createDb
+    }
+
+    SQLDataBase.shared.createNewTable(db: database)
+    
+ // Need to write in error handler for grabbing old db and new db here
+    
             func getRows() -> Array<ItemContainter> {
                 do {
                     let records = try self.database.prepare(self.itemTable2.order(id.desc))
@@ -51,11 +49,42 @@ override func viewDidLoad() {
                 }
                 return checkOutItemsArray
             }
-            print(getRows())
-        
-    SQLDataBase.shared.checkTableItems(db: database)
+    
+    /////////
+//    func getOldRows() -> Array<ItemContainter1> {
+//        do {
+//            let records = try self.database.prepare(self.itemTable2.order(id.desc))
+//            for record in records {
+//                
+//                checkOutItemsArray1.append(ItemContainter1(idNum: record[self.id], itemName: "\(record[self.item])", assigned: "\(record[self.assignedTo])", staff: "\(record[self.staff])", timeCheck: "\(record[self.timecheck])",serialNum: "\(record[self.serial])"))
+//            }
+//            print(checkOutItemsArray1.count)
+//        } catch {
+//            print(error)
+//        }
+//        return checkOutItemsArray1
+//    }
+
+  //  let loadItemsContainer1 = getOldRows()
+  
+  /////////
+    
+   let loadItemContainer = getRows()
+
+    
+    
+    
+   print(loadItemContainer)
     
         }
+    
+//
+//    do {
+//    try getRows()
+//
+//    } catch {
+//
+//    }
     
 //Database properties
     let itemTable2  = Table("ItemCheck2")
@@ -75,6 +104,7 @@ override func viewDidLoad() {
     
     var checkOutItemsArray:[ItemContainter] = []
     
+    var checkOutItemsArray1:[ItemContainter1] = []
     
     
 /// Setup table view for thie viewController
@@ -243,7 +273,7 @@ override func viewDidLoad() {
         
 //MARK:- Address this:  Will need to test out this ALERT  with OLD table and NEW table running in app to minimize potential errors!!! Will need to run script on the list button.
 //MARK:- Need to create different date converter for return date because RDate only tracks days NOT days+hours thats why this didSelectFunction doesnt work
-// MARK: - THe N/A default entry is breaking the list button here. Must figure out how to get the listview to appear at least
+// MARK: - THe N/A default entry is breaking the list button here. Must figure out how to get the listview to appear at least -- FIXED!
         
         // if covertedReturnDate returns N/A then we use one constant. if it returns with date then we use the other one....
         

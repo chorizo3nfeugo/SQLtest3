@@ -253,12 +253,12 @@
                                 <rect key="frame" x="97" y="718" width="220" height="40"/>
                                 <color key="backgroundColor" red="0.27400761839999999" green="0.087901584800000002" blue="0.72585934399999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="220" id="4Na-8E-vxc"/>
+                                    <constraint firstAttribute="width" constant="220" id="4Na-8E-vxc"/>
                                     <constraint firstAttribute="height" constant="40" id="E8A-br-dja"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="23"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Assigned To">
+                                <state key="normal" title="Assigned To" backgroundImage="1">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -318,7 +318,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="23"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Confirm">
+                                <state key="normal" title="Confirm" backgroundImage="4">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -492,7 +492,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="23"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Submit">
+                                <state key="normal" title="Submit" backgroundImage="3">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -879,11 +879,11 @@
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="220" id="FKm-QZ-TlI"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="J1R-2b-115"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="jGQ-iv-IxM"/>
+                                    <constraint firstAttribute="height" constant="50" id="jGQ-iv-IxM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="23"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Submit">
+                                <state key="normal" title="Submit" backgroundImage="4">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -945,26 +945,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Checked Out! " textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="QZb-CU-tgR">
-                                <rect key="frame" x="102.66666666666669" y="391" width="209" height="60"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Checked Out! " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZb-CU-tgR">
+                                <rect key="frame" x="77" y="391" width="260" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="fLX-H1-yyj"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="260" id="ihh-Lk-ok4"/>
+                                    <constraint firstAttribute="width" constant="260" id="tVi-qe-A3x"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccE-vr-17G">
-                                <rect key="frame" x="78" y="511" width="258" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ccE-vr-17G">
+                                <rect key="frame" x="74.666666666666686" y="481" width="265" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="265" id="LUa-TB-Pke"/>
                                     <constraint firstAttribute="height" constant="50" id="k7W-Bp-5WK"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                 <color key="tintColor" systemColor="darkTextColor"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
-                                <state key="normal" title="Sign Out Another Item">
+                                <state key="normal" title="Sign Out Another Item!" backgroundImage="2">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -979,7 +982,7 @@
                             <constraint firstItem="ccE-vr-17G" firstAttribute="centerX" secondItem="2tA-b1-6ow" secondAttribute="centerX" id="GkQ-dz-qXM"/>
                             <constraint firstItem="QZb-CU-tgR" firstAttribute="centerX" secondItem="2tA-b1-6ow" secondAttribute="centerX" id="KeR-oT-Xyf"/>
                             <constraint firstItem="QZb-CU-tgR" firstAttribute="centerX" secondItem="2tA-b1-6ow" secondAttribute="centerX" id="UpV-1p-doJ"/>
-                            <constraint firstItem="ccE-vr-17G" firstAttribute="top" secondItem="QZb-CU-tgR" secondAttribute="bottom" constant="60" id="mA3-KE-e4t"/>
+                            <constraint firstItem="ccE-vr-17G" firstAttribute="top" secondItem="QZb-CU-tgR" secondAttribute="bottom" constant="30" id="mA3-KE-e4t"/>
                             <constraint firstItem="QZb-CU-tgR" firstAttribute="centerY" secondItem="2tA-b1-6ow" secondAttribute="centerY" id="uG4-wV-tYQ"/>
                         </constraints>
                     </view>
@@ -991,7 +994,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J98-cg-Qzu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2293" y="453"/>
+            <point key="canvasLocation" x="2292.753623188406" y="452.67857142857139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xas-nL-pff">
@@ -1014,10 +1017,11 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="0YT-gD-FSl"/>
-        <segue reference="53d-Li-tpN"/>
+        <segue reference="7jq-DV-CVv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="1" width="1000" height="1000"/>
+        <image name="2" width="1000" height="1000"/>
         <image name="3" width="1000" height="1000"/>
         <image name="4" width="1000" height="1000"/>
         <systemColor name="darkTextColor">

@@ -80,6 +80,7 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
         confirmBtnView.layer.cornerRadius = 6
         totalItemsLabel.layer.cornerRadius = 6
         totalItemsLabel.clipsToBounds = true
+        confirmBtnView.clipsToBounds = true
         theStaffPicker.delegate = self
         theStaffPicker.dataSource = self
         checkedOutBy.inputView = theStaffPicker
@@ -193,11 +194,19 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
         let assignCheck = assignedTo.text?.isEmpty
         let checkOutCheck = checkedOutBy.text?.isEmpty
         let dateCheck = returnDateCheck(chosenDate: returnDate.text!)
-
+       
+        if dateCheck == true {
+            Alert.showBasic(title: "Time Traveller eh?", message: "Please select a date in the future for return date!", vc: self)
+        }
+        
+        print("DateCheck has been set to: \(dateCheck)")
+      //  print(dateCheck)
+        
         switch true {
+       
         case assignCheck: Alert.showBasic(title: "Missing Assigned To!", message: "Fill in Assiged To! Where/who are these items going to?", vc: self)
         case checkOutCheck: Alert.showBasic(title: "Missing Data", message: "Select Staff memeber for Signed out by!", vc: self)
-        case dateCheck: Alert.showBasic(title: "Time Traveller eh?", message: "Please select a date in the future for return date!", vc: self)
+       
         default: print("default triggered")
             }
         
@@ -214,14 +223,30 @@ class MultiItemConfirm: UIViewController,UIPickerViewDataSource,UIPickerViewDele
  // Insert assignee and checkOutby label into itemsINcart
            
             
-            DestViewController.finalItemsToSubmit = itemsInCart
- //
-            DestViewController.assigneeName = assignedTo.text!
-            DestViewController.staffName = checkedOutBy.text!
- //
-            DestViewController.totalItems = totalItemsLabel.text!
-            DestViewController.returnDate = returnDate.text!
+//            DestViewController.finalItemsToSubmit = itemsInCart
+// //
+//            DestViewController.assigneeName = assignedTo.text!
+//            DestViewController.staffName = checkedOutBy.text!
+// //
+//            DestViewController.totalItems = totalItemsLabel.text!
         
+            if returnDate.text == "" {
+                DestViewController.finalItemsToSubmit = itemsInCart
+     
+                DestViewController.assigneeName = assignedTo.text!
+                DestViewController.staffName = checkedOutBy.text!
+     
+                DestViewController.totalItems = totalItemsLabel.text!
+                DestViewController.returnDate = "N/A"
+            } else {
+                DestViewController.finalItemsToSubmit = itemsInCart
+     
+                DestViewController.assigneeName = assignedTo.text!
+                DestViewController.staffName = checkedOutBy.text!
+     
+                DestViewController.totalItems = totalItemsLabel.text!
+                DestViewController.returnDate = returnDate.text!
+            }
             
             
         }
