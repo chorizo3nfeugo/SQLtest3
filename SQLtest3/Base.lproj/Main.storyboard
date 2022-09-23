@@ -631,7 +631,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95h-Vr-3ZR">
-                                <rect key="frame" x="117" y="213" width="180" height="24"/>
+                                <rect key="frame" x="117" y="282" width="180" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="Pen-VT-hWS"/>
                                 </constraints>
@@ -673,7 +673,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comp,Monitor,Printer" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ou7-cF-Fd9">
-                                <rect key="frame" x="117" y="252" width="180" height="103"/>
+                                <rect key="frame" x="117" y="321" width="180" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="AG5-bC-x7u"/>
                                 </constraints>
@@ -773,7 +773,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bml-9e-pDO">
-                                <rect key="frame" x="207" y="207.66666666666666" width="90" height="35"/>
+                                <rect key="frame" x="207" y="276.66666666666669" width="90" height="35"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="90" id="OPA-C5-xkV"/>
@@ -818,7 +818,6 @@
                             <constraint firstItem="8Gu-7N-kD6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dvI-lP-xo1"/>
                             <constraint firstItem="fdD-ep-yid" firstAttribute="top" secondItem="q4Y-Qg-79I" secondAttribute="bottom" constant="15" id="fam-vQ-h5a"/>
                             <constraint firstItem="cgO-OF-Ncc" firstAttribute="top" secondItem="0qA-sx-mTe" secondAttribute="bottom" constant="10" id="fo9-IQ-qQH"/>
-                            <constraint firstItem="Ou7-cF-Fd9" firstAttribute="top" relation="lessThanOrEqual" secondItem="8Gu-7N-kD6" secondAttribute="bottom" constant="152" id="gyc-FN-enT"/>
                             <constraint firstItem="NfC-AV-xWU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="hOh-h2-G1x"/>
                             <constraint firstItem="Ou7-cF-Fd9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="imN-8G-A6H"/>
                             <constraint firstItem="cgO-OF-Ncc" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="l6A-QY-CHf"/>
@@ -1016,6 +1015,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="gF7-Wg-vzU"/>
         <segue reference="0YT-gD-FSl"/>
         <segue reference="7jq-DV-CVv"/>
     </inferredMetricsTieBreakers>

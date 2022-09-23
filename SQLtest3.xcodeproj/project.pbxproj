@@ -395,7 +395,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
 				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;
@@ -417,7 +417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = zeus.epicapps.SQLtest3;
 				PRODUCT_NAME = "Item Check List";
 				SWIFT_VERSION = 4.0;

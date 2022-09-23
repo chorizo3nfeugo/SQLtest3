@@ -29,15 +29,12 @@ class MultipleItemsVC: UIViewController {
         assignBtnView.layer.cornerRadius = 6
                     /// You do not need the code below when using cutomTabelviewCell file, it will just break!
         assignBtnView.clipsToBounds = true
-// self.itemsTableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: "Cell")
+
     
-        let item1 = ItemForMulti(itemName: "SexBox", serialNum: ["N/A"], qty: 1, assignedTo: "N/A", checkedBy: "N/A")
-
-     itemsCollection.append(item1)
-
-        
-        print(itemsCollection.count)
-        
+//    let item1 = ItemForMulti(itemName: "SexBox", serialNum: ["N/A"], qty: 1, assignedTo: "N/A", checkedBy: "N/A")
+//    itemsCollection.append(item1)
+//    print(itemsCollection.count)
+//        
     }
     
     

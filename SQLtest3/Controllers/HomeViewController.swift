@@ -37,10 +37,6 @@ import Foundation
         performSegue(withIdentifier: "gotoConfig", sender: self)
     }
     
-    
-  
-    
-    
  
     
     @IBOutlet weak var itemNameField : UITextField!
@@ -174,7 +170,7 @@ import Foundation
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
             
-            returnDatePicker.preferredDatePickerStyle = .inline
+            returnDatePicker.preferredDatePickerStyle = .compact
             returnDatePicker.sizeToFit()
 
             

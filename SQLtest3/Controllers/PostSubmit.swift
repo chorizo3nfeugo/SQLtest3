@@ -14,7 +14,6 @@ final class Postsubmition: UIViewController {
    
     
 // MARK: - ViewDidLoad
-    
    
     var finalLabelText = "Item Submitted & Saved!"
     var titleLabelText = "Item Submitted!"

@@ -81,15 +81,11 @@ class MultiItemSubmitVC: UIViewController {
     
     
     // MARK: - Add return Date per item and then show UItext which triggers Calander Selection
-    
-    
     @IBOutlet weak var submitBtnView: UIButton!
+    
+    // MARK: - Submit button only works after you submit a single item and then after that,  the multiple items submit button works/inputs item's data in db.
     @IBAction func submitBtn(_ sender: Any) {
         
-        // Take serial numbers and item names to input
-        // for total of serial numbers in finalItemsTosubmit we will insert items into db
-        
-                // let qtyToSubmit = finalItemsToSubmit.map {$0.qty}
         
         for items in finalItemsToSubmit {
             
@@ -103,7 +99,7 @@ class MultiItemSubmitVC: UIViewController {
                 let staff  = staffName
                 let timeCheck = checkOutTime()
                 
-                
+        ///Old code for previous versions...
         //        SQLDataBase.shared.insertItems(db: database, item: itemName, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck )
                 
                 SQLDataBase.shared.insertItemsV2(db: database, item: itemName, assignedTo: assignedTo, staff: staff, serial: serialNum, timeCheck: timeCheck, returnDate: returnDate )
